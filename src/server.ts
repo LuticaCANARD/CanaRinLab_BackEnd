@@ -10,3 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
     res.send("RES!!!");
 });
+app.listen(PORT,()=>{
+    console.log(`SERVER IS ON ${PORT}`);
+});

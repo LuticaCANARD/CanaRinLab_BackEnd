@@ -1,1 +1,1 @@
-server: npm build & node ./dist/server.js
+server: npm build & npm start

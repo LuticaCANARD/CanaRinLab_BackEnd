@@ -1,6 +1,8 @@
 import express from "express";
 import { createServer } from "http";
 import { WebSocket } from "ws";
+import * as VrcControl from "./vrchat/vrc_controller"
+import * as WebControl from "./web/web_controller"
 
 const app = express();
 const server = createServer(app);
@@ -12,6 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
     res.send("RES!!!");
 });
+app.post('/vrc_search_table',(req,res)=>{
+    let result = {}
+    let request = req.body;
+
+    res.json(result)
+})
 wsServer.on("connection", (ws: WebSocket) => {
 
 });

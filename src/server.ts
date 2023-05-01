@@ -17,12 +17,12 @@ app.get("/", async (req, res) => {
 
     res.send("RES!!!");
 });
-app.post('/vrc_search_table',(req,res)=>{
+app.post('/vrchat/:order/:argu*',async(req, res) => {
     let result = {}
     let request = req.body;
     
     res.json(result)
-})
+});
 wsServer.on("connection", (ws: WebSocket) => {
 
 });

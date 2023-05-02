@@ -23,6 +23,6 @@ export module VrcControl {
     async function insertUserData():Promise<object>
     {
 
-        return
+        return 
     }
 }

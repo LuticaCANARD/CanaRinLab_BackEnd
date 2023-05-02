@@ -5,8 +5,10 @@
 */
 import * as Utils from '../Utils/utils'
 export module VrcControl {
-    function routeVrcRequest(request:object,route:string):object{
+    export async function routeVrcRequest(request:object,route:string):Promise<object>{
         let result = {}
+        let db = Utils.DBpool
+        
         
         return result
     }

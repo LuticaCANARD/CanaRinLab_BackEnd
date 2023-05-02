@@ -3,7 +3,6 @@ import { createServer } from "http";
 import { WebSocket } from "ws";
 import * as VrcControl from "./vrchat/vrc_controller"
 import * as WebControl from "./web/web_controller"
-import { createServer as createViteServer } from 'vite'
 
 
 const app = express();

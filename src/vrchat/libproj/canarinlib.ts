@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 import fs from "fs/promises";
 
+let cache_codes = {}
 let sup_langs = require('../../../public/supportlang.json').langs;
 export async function loadBook(request:object,db:Pool):Promise<object>
 {
@@ -42,7 +43,17 @@ export async function loadLibs(request:object,db:Pool):Promise<object>
     else if (sup_langs.indexOf(language) === -1){
         language = 'en'
     }
-    let book_infos = await db.query(`SELECT code,bookname,auther FROM tb_bookinfo WHERE lang = $1 ORDER BY code`,[language])
-    let book_info = book_infos.rows
+    let book_infos = null
+    let book_info = null
+    if (cache_codes[language] == undefined)
+    { //hit! 무중단 배포를 논해야 한다면 그때 논하라!
+        book_infos =  await db.query(`SELECT code,bookname,auther FROM tb_bookinfo WHERE lang = $1 ORDER BY code`,[language])
+        cache_codes[language] = book_infos.rows
+        book_info = book_infos.rows
+    }
+    else
+    {
+        book_info = cache_codes[language]
+    }
     return book_info;
 }

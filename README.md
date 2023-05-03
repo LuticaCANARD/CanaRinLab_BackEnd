@@ -39,7 +39,7 @@ order 기준
 - book 객체
 ```ts
 class book {
-    bookcode: string,
+    bookcode: number,
     bookname: string,
     auther  : string,
 }

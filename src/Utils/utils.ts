@@ -3,6 +3,7 @@ import * as crypto from './crypto/crypto'
 import { Pool } from 'pg'
 
 export const DBpool = new Pool({
+    host : process.env['dbhost'],
     database: process.env['dbname'],
     user: process.env['dbuser'],
     password: process.env['dbpw'],

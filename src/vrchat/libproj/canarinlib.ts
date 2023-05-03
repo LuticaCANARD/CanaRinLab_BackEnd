@@ -23,7 +23,7 @@ export async function loadBook(request:object,db:Pool):Promise<object>
     catch(err)
     {
         let result = {'error' : -2}
-        return result
+        return result 
     }
     return book_info;
 }

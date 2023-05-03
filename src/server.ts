@@ -8,7 +8,7 @@ import * as WebControl from "./web/web_controller"
 const app = express();
 const server = createServer(app);
 const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 80;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

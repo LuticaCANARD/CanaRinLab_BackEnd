@@ -3,8 +3,8 @@
  * 
  *
 */
-import * as RinLib from './libproj/canarinlib'
-import * as Utils from '../Utils/utils'
+import * as RinLib from './libproj/canarinlib' // Cana rin Lib project
+import * as Utils from '../Utils/utils' // Formally.
 export module VrcControl {
     let db = Utils.DBpool
     export async function routeVrcRequest(request:object,route:string):Promise<string>{

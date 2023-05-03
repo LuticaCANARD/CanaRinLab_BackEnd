@@ -21,10 +21,7 @@ order 기준
 
 |name|type|desc|
 |----|----|----|
-|bookname|string|책의 이름|
-|auther|string|책의 작가|
 |bookinside|string|책 내용, html로 서버에서 포팅.|
-|bookmeta|string|책의 정보|
 
 ## Load_libs
 - arguments (POST)

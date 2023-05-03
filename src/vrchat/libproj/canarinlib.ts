@@ -14,8 +14,7 @@ export async function loadBook(request:object,db:Pool):Promise<object>
     else if (sup_langs.indexOf(language) === -1){
         language = 'en'
     }
-    let book_info = await db.query(`SELECT bookname,auther,bookinside,bookmeta FROM tb_bookinfo WHERE code = $1 AND lang = $2 `,[bookcode,language])
-    book_info = book_info.rows[0]
+    let book_info = {}
     try{
         fs.readFile(`../../../public/${request['bookcode']}_${request['language']}.html`,(err, data) => {
             book_info['bookinside'] = data.toString()})

@@ -42,7 +42,7 @@ export async function loadLibs(request:object,db:Pool):Promise<object>
     else if (sup_langs.indexOf(language) === -1){
         language = 'en'
     }
-    let book_infos = await db.query(`SELECT code,bookname,auther FROM tb_bookinfo WHERE lang = $1 `,[language])
+    let book_infos = await db.query(`SELECT code,bookname,auther FROM tb_bookinfo WHERE lang = $1 ORDER BY code`,[language])
     let book_info = book_infos.rows
     return book_info;
 }

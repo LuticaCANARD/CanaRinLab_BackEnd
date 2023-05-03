@@ -26,7 +26,7 @@ export module VrcControl {
                 if (load_result['error'] == null)
                     result = load_result['bookinside']
                 else
-                    result ='there is no book on server!'+load_result['error']
+                    result ='there is no libs on server!'+load_result['error']
                 break
             default :
                 result ='There is no command for server!'

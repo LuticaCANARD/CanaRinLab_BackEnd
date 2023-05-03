@@ -18,14 +18,16 @@ export module VrcControl {
             case 'load_book':
                 let load_result = await RinLib.loadBook(request,db)
                 if (load_result['error'] == null)
-                    result = load_result['bookinside']
+                    result['ret'] = load_result['bookinside']
                 else
                     result['ret'] = 'there is no book on server!'+load_result['error']
                 break
             case 'load_libs':
                 load_result = await RinLib.loadLibs(request,db)
-                if (load_result['error'] == null)
-                    result = load_result['bookinside']
+                if (load_result['error'] == null){
+                    result['ret'] = load_result['libs']
+                    result['json']=true
+                }    
                 else
                     result['ret'] ='there is no libs on server!'+load_result['error']
                 break

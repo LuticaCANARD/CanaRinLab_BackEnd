@@ -17,10 +17,17 @@ app.get("/", async (req, res) => {
     res.send("RES!!!");
 });
 app.get('/vrchat/:order',async(req, res) => {
-    let request = req.query;
-    let result = await VrcControl.VrcControl.routeVrcRequest(request,req.params.order)
-    console.log(result)
-    res.send(result)
+    try{
+        let request = req.query;
+        let result = await VrcControl.VrcControl.routeVrcRequest(request,req.params.order)
+        console.log(result)
+        res.send(result)
+    }
+    catch(err){
+        console.log(err)
+        res.status(400).send('error!')
+    }
+
 });
 wsServer.on("connection", (ws: WebSocket) => {
 

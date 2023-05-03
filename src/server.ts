@@ -16,10 +16,10 @@ app.get("/", async (req, res) => {
 
     res.send("RES!!!");
 });
-app.post('/vrchat/:order/:argu*',async(req, res) => {
-    let request = req.body;
+app.get('/vrchat/:order',async(req, res) => {
+    let request = req.query;
     let result = await VrcControl.VrcControl.routeVrcRequest(request,req.params.order)
-    res.json(result)
+    res.send(result)
 });
 wsServer.on("connection", (ws: WebSocket) => {
 

@@ -11,12 +11,14 @@ order 기준
 - 책의 내용자체를 불러온다.
 > 서버에서는 불러오는 역할만 하고, 그 외는 우동 네트워크로 제어권 등을 연결한다.
 - arguments (POST)
+
 |name|type|desc|
 |----|----|----|
 |bookcode|int|불러올 도서의 code|
 |language|string|불러올 도서의 언어 ko,en,ja등|
 
 - return
+
 |name|type|desc|
 |----|----|----|
 |bookname|string|책의 이름|
@@ -26,11 +28,13 @@ order 기준
 
 ## Load_libs
 - arguments (POST)
+
 |name|type|desc|
 |----|----|----|
 |language|string|불러올 도서관의 언어 ko,en,ja등|
 
 - return (POST)
+
 |name|type|desc|
 |----|----|----|
 |books|book[]|불러올 도서관의 codes.|

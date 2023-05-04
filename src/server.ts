@@ -21,7 +21,7 @@ app.get('/vrchat/:order',async(req, res) => {
         let request = req.query;
         let result = await VrcControl.VrcControl.routeVrcRequest(request,req.params.order)
         console.log(result)
-        if (result['json']) res.json(result)
+        if (result['json']===true) res.json(result)
         else res.send(result)
     }
     catch(err){

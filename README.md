@@ -18,7 +18,7 @@ order 基準
 - 책의 내용자체를 불러온다.
 - 本の内容をロードします。
 > 서버에서는 불러오는 역할만 하고, 그 외는 우동 네트워크로 제어권 등을 연결한다.
-- arguments (POST)
+- arguments (get)
 
 |name|type|desc|
 |----|----|----|
@@ -32,7 +32,7 @@ order 基準
 |bookinside|string|책 내용, html로 서버에서 포팅.|
 
 ## Load_libs
-- arguments (POST)
+- arguments (get)
 
 |name|type|desc|
 |----|----|----|

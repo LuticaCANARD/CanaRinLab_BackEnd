@@ -14,6 +14,8 @@
 order 기준    
 order 基準
 
+- VRCUrl의 수정불가성으로 인하여, load_libs와 load_book는 병합될 예정이며, 토큰으로 분리할 예정임.
+
 ## load_book
 - 책의 내용자체를 불러온다.
 - 本の内容をロードします。

@@ -48,3 +48,23 @@ class book {
 - 참조
 - tb_bookinfo(code,lang,bookname,auther,bookinside,bookmeta)
 
+
+### 문서 작성시 태그 기능
+
+|태그|내용|
+|---|---|
+|```<color="색> 또는 <#색값> </color>```|텍스트 색상|
+|```<b></b>```|굵은 글씨|
+|```<i></i>```|기울임|
+|```<u></u>```|밑줄|
+|```<s></s>```|취소선|
+|```<sup></sup>```|상단 글자|
+|```<sub></sub>```|하단 글자|
+|```<mark></mark>```|하이라이트 |
+|```<cspace=크기></cspace>```|	글자 사이의 간격, 크기만큼 띄어짐|
+|```<mspace=크기></mspace>```|	크기가 0이면 글자 사이의 간격이 없어짐|
+|```<line-height=크기></line-height>```|	개행 간격|
+|```<size=크기%></size>```|	 크기만큼 글자의 사이즈가 작거나 커짐|
+|```<align=left,center,right></align>```|	글자의 정렬 기능|
+|```<style=미리 정의한 스타일 이름></style>```|	미리 정의한 tag가 설정됨|
+|```<font=폰트 이름 material = 폰트의 메터리얼 이름></font>```|	하나의 TextMeshPro에서 다른 폰트를 사용할 수 있음|

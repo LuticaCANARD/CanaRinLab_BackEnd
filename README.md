@@ -7,8 +7,8 @@
 # 사전 표기
 - 언어코드의 기본 규정은 ISO 639-1 표준을 따른다. 
 - 言語コードの基本に関しては、ISO 639-1 標準を従います。
-- VRChat은 그 특성으로 인하여, string반환이 강제되어있다. 이에 유의하여, string으로 return하는 함수로 편성한다. 또한, 차후 업데이트를 감안하여, json post도 남겨는 두자.
-- VRCHATはその特性で、STRING returnが強制されています。(json parsingが難しい)。なので、可能であればstringでreturnするfunctionで作成する。
+-~~ VRChat은 그 특성으로 인하여, string반환이 강제되어있다. 이에 유의하여, string으로 return하는 함수로 편성한다. 또한, 차후 업데이트를 감안하여, json post도 남겨는 두자.
+- VRCHATはその特性で、STRING returnが強制されています。(json parsingが難しい)。なので、可能であればstringでreturnするfunctionで作成する。~~
 
 # VRC통신 규약
 order 기준    

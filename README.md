@@ -48,3 +48,7 @@ class book {
 - 참조
 - tb_bookinfo(code,lang,bookname,auther,bookinside,bookmeta)
 
+```
+npx prisma generate
+```
+

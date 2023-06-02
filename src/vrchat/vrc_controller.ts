@@ -1,5 +1,5 @@
 /**
- *  VRChat방향 Back-end이다. 감안하라.
+ *  VRChat방향 Back-end이다.
  * 
  *
 */
@@ -25,7 +25,7 @@ export module VrcControl {
             case 'load_libs':
                 load_result = await RinLib.loadLibs(request,db)
                 if (load_result['error'] == null){
-                    result['ret'] = load_result['libs']
+                    result['books'] = load_result['libs']
                     result['json']=true
                 }    
                 else

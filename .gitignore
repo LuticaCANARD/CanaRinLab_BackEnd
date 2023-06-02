@@ -131,3 +131,5 @@ dist
 dockercompose.yaml
 
 secure.json
+/prisma/generated/*
+/prisma/schema.md

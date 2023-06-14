@@ -21,7 +21,6 @@ export async function loadBook(request:object,db:Pool):Promise<object>
     try{
         let read =await fs.readFile(`./public/${request['language']}/${bookcode}.html`)
         book_info['bookinside'] = read.toString()
-        
     }
     catch(err)
     {

@@ -129,3 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 dockercompose.yaml
+
+secure.json
+/prisma/generated/*
+/prisma/schema.md

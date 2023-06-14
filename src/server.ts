@@ -3,7 +3,8 @@ import { createServer } from "http";
 import { WebSocket } from "ws";
 import * as VrcControl from "./vrchat/vrc_controller"
 import * as WebControl from "./web/web_controller"
-
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 const app = express();
 const server = createServer(app);

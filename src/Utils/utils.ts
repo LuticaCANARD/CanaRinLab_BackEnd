@@ -37,6 +37,5 @@ export class RouteResult {
         return ret
     }
 }
-     
 
 export default DBpool

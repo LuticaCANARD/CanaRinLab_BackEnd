@@ -9,5 +9,9 @@
         "sourceType": "module"
     },
     "rules": {
+        "indent":[
+            "error",
+            "tab"
+        ]
     }
 }

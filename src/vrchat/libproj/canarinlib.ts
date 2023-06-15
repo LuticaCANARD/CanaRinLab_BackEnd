@@ -1,5 +1,6 @@
 import { Pool } from "pg";
 import fs from "fs/promises";
+import { db } from'../../Utils/db';
 
 let cache_codes = {}
 let sup_langs = require('../../../public/supportlang.json').langs;

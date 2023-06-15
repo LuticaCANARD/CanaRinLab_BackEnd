@@ -20,3 +20,31 @@ model User {
   email String  @unique
   name  String?
 }
+
+
+model DateWeek {
+  DateId              Int @id
+  STCS_DT             DateTime
+  DAY_DV_CD_NM        String
+  BIZ_DD_STG_CD_NM    String
+  StnStats            RailStnStat[]
+}
+model RailStnStat{
+  DateId                Int   
+  Dates                 DateWeek @relation(references: [DateId], fields:[DateId]) 
+  EXTR_STN_CD           Int
+  StationName           StnName  @relation(references: [HR_UNIT_HR_DV_CD], fields:[HR_UNIT_HR_DV_CD]) 
+  HR_UNIT_HR_DV_CD      Int
+  ABRD_PRNB             Int
+  GOFF_PRNB             Int
+  @@id([DateId,EXTR_STN_CD,HR_UNIT_HR_DV_CD])
+  @@unique([DateId,EXTR_STN_CD,HR_UNIT_HR_DV_CD])
+  @@index([HR_UNIT_HR_DV_CD])
+}
+
+
+model StnName{
+  HR_UNIT_HR_DV_CD Int @id
+  STN_NM           String
+  StnStat          RailStnStat[]
+}

@@ -1,1 +1,1 @@
-server: bun install ; bun run start
+server: gunicorn wsgi:app;bun install ; bun run start

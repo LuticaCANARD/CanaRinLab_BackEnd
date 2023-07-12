@@ -13,8 +13,7 @@ const app = new Elysia()
 .group('/vrchat',VrcRouter)
 .listen({
 	PORT:PORT,
-	hostname:process.env.hostname||'localhost'});
-	console.log(process.env)
+	hostname:null});
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });

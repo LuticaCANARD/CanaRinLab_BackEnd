@@ -14,6 +14,7 @@ const app = new Elysia()
 .listen({
 	PORT:PORT,
 	hostname:process.env.host||'localhost'});
+	console.log(process.env)
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });

@@ -1,1 +1,1 @@
-server: npm install &npm build & npm start
+server: bun install & bun build & bun start

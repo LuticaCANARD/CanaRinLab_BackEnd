@@ -17,6 +17,7 @@ export module VrcControl {
 }
 
 const VrcGroup = (c:{ body, set })=>{
+	console.log('ss')
 	return {}
 }
 

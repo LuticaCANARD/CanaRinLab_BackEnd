@@ -12,8 +12,8 @@ const app = new Elysia()
 .get('/bb',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .listen({
-	PORT:PORT,
-	hostname:null});
+	PORT:PORT});
+	console.log(process.env)
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });

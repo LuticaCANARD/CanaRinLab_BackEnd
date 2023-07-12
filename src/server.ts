@@ -16,5 +16,6 @@ const app = new Elysia()
 	console.log(process.env)
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
+export default app
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });
 //wsServer.on("connection", (ws: WebSocket) => {});

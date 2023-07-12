@@ -1,1 +1,1 @@
-server: bun install & bun build & bun start
+server: bun install & bun build & bun run 

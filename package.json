@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/server.js",
+    "start": "bun src/server.ts",
     "dev": "bun --hot src/server.ts",
     "test": "jest",
     "db:push": "prisma db push",

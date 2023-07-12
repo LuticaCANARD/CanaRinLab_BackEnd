@@ -1,1 +1,1 @@
-server: npm install &npm build & npm start
+server: npm install &npm run build & npm run start

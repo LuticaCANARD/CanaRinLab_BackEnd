@@ -17,6 +17,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
+    "@elysiajs/fn": "^0.5.2",
     "@prisma/client": "^4.15.0",
     "@types/express-ws": "^3.0.1",
     "@types/ws": "^8.5.4",

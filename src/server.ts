@@ -12,7 +12,7 @@ const app = new Elysia()
 .get('/bb',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .listen({
-	PORT:PORT,
+	port:PORT,
 	hostname:process.env.HOSTNAME || '0.0.0.0'});
 	console.log(process.env)
 

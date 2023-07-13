@@ -6,7 +6,7 @@ import { VrcRouter } from "./vrchat/vrc_controller"
 import { Elysia,Context } from 'elysia'
 
 //const prisma = new PrismaClient()
-const PORT = Number(process.env.RIN_LAB_PORT) || 10000; 
+const PORT = Number(process.env.RIN_LAB_PORT) || 80; 
 
 const app = new Elysia()
 .get('/bb',()=>{return 'hi'})

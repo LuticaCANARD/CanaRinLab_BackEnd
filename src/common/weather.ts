@@ -4,10 +4,13 @@ export const getWeather = () => {
 	const config:request.CoreOptions= {
 		//headers:
 		body: {},
-		method: "POST",
+		method: "GET",
 		json:true
 	}
-	request.post( url,config,(error, response, body)=>{
+	// https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
+	// getUltraSrtNcst/key/...
+	// GET 방식으로 입력.
+	request.get( url,config,(error, response, body)=>{
 
 	})
 }

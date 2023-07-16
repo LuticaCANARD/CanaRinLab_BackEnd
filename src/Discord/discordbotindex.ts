@@ -15,4 +15,4 @@ export const DiscordRouter = (app:Elysia <ElysiaInstance>) :Elysia<ElysiaInstanc
 	app
 	.get('/',discordInit)
 	return app;
-} 
+}  

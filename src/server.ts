@@ -17,7 +17,7 @@ const app = new Elysia()
 	port:PORT,  
 	hostname:process.env.HOSTNAME || '0.0.0.0'
 });
-console.log(process.env)
+//console.log(process.env)
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
 //export default app

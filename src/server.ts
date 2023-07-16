@@ -14,12 +14,12 @@ const app = new Elysia()
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 
-	port:PORT,
+	port:PORT,  
 	hostname:process.env.HOSTNAME || '0.0.0.0'
 });
-	//console.log(process.env)
+console.log(process.env)
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
-export default app
+//export default app
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });
 //wsServer.on("connection", (ws: WebSocket) => {});

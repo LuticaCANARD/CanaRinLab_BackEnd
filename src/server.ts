@@ -10,7 +10,7 @@ import { Elysia,Context } from 'elysia'
 const PORT = Number(process.env.RIN_LAB_PORT) || 10000; 
 
 const app = new Elysia()
-.get('/bb',()=>{return 'hi'})
+.get('/',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 

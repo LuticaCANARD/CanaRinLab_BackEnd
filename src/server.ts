@@ -14,7 +14,7 @@ const app = new Elysia()
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 
-	port:PORT,  
+	port:443,  
 	hostname:process.env.HOSTNAME || '0.0.0.0'
 });
 //console.log(process.env)

@@ -14,7 +14,7 @@ const app = new Elysia()
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 
-	port:80,  
+	port:443,  
 	hostname:process.env.HOSTNAME || 'canarinlab.site'
 });
 //console.log(process.env)

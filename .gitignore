@@ -134,3 +134,6 @@ secure.json
 /prisma/generated/*
 /prisma/schema.md
 /SECURE/*
+
+/canarinlab.site/*
+/keys/*

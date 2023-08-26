@@ -15,7 +15,7 @@ const app = new Elysia()
 .group('/discord',DiscordRouter)
 .listen({ 
 	port:80,  
-	hostname:process.env.HOSTNAME || '0.0.0.0'
+	hostname:process.env.HOSTNAME || 'canarinlab.site'
 });
 //console.log(process.env)
 

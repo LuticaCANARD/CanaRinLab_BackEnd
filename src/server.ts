@@ -20,7 +20,7 @@ if(!process.env.RIN_LAB_PORT)
 }
 
 const app = new Elysia()
-.get('/',()=>{return 'hi'})
+.get('',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 

@@ -7,8 +7,8 @@ import nacl from 'tweetnacl'
 const discordInit = async (c:Context<any>) =>{
 	console.log(c.headers);
 	const PUBLIC_KEY = process.env["PUBLIC_KEY"]
-	const signature = String(c.headers['X-Signature-Ed25519']);
-	const timestamp = String(c.headers['X-Signature-Timestamp']);
+	const signature = String(c.headers["x-signature-ed25519"]);
+	const timestamp = String(c.headers["x-signature-timestamp"]);
 	const verbody = JSON.stringify(c.body); // rawBody is expected to be a string, not raw bytes
 
 	const isVerified = nacl.sign.detached.verify(

@@ -30,7 +30,7 @@
     "kysely": "^0.25.0",
     "mysql2": "^3.3.3",
     "pg": "^8.10.0",
-    "prisma": "^5.0.0",
+    "prisma": "^5.2.0",
     "prisma-erd-generator": "^1.6.0",
     "prisma-kysely": "^1.4.2",
     "request": "^2.88.2",
@@ -39,8 +39,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "bun src/server.ts",
-    "dev": "bun --hot src/server.ts",
+    "start": "prisma generate | bun src/server.ts",
+    "dev": "prisma generate | bun --hot src/server.ts",
     "test": "jest",
     "db:push": "prisma db push",
     "generate": "prisma generate"

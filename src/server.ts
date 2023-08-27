@@ -38,6 +38,7 @@ const ws_server = new Elysia()
 .listen(
 	{
 		port:process.env.WS_PORT||9999,
+		hostname:process.env.HOSTNAME || '0.0.0.0',
 		tls
 	}
 )
@@ -48,6 +49,7 @@ const ws_server = new Elysia()
 
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
+console.log(`WEBSOCKET IS ON : ${ws_server.server.port}`)
 //export default app
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });
 //wsServer.on("connection", (ws: WebSocket) => {});

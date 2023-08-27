@@ -45,7 +45,7 @@ const ws_server = new Elysia()
 	{
 		port:process.env.WS_PORT||9999,
 		hostname:process.env.HOSTNAME || '0.0.0.0',
-		//tls
+		tls
 	}
 )
 

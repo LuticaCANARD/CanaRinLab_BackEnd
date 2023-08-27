@@ -4,11 +4,11 @@ import { swagger } from '@elysiajs/swagger'
 import nacl from 'tweetnacl'
 
 
-const discordInit = async ({ body, set }) =>{
+const discordInit = async (c:Context<any>) =>{
 	const PUBLIC_KEY = process.env["PUBLIC_KEY"]
-	const signature = body.get('X-Signature-Ed25519');
-	const timestamp = body.get('X-Signature-Timestamp');
-	const verbody = body.rawBody; // rawBody is expected to be a string, not raw bytes
+	const signature = String(c.headers['X-Signature-Ed25519']);
+	const timestamp = String(c.headers['X-Signature-Timestamp']);
+	const verbody = JSON.stringify(c.body); // rawBody is expected to be a string, not raw bytes
 
 	const isVerified = nacl.sign.detached.verify(
 		Buffer.from(timestamp + verbody),
@@ -17,10 +17,11 @@ const discordInit = async ({ body, set }) =>{
 	);
 
 	if (!isVerified) {
-		return set.status(401).end('invalid request signature');
+		c.set.status = 401
+		return'invalid request signature';
 	}
-	if(body["type"] == 1){
-		set.status = 200;
+	if(c.body["type"] == 1){
+		c.set.status = 200;
 		return {
 			type:1
 		};

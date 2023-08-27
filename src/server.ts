@@ -20,11 +20,11 @@ if(!process.env.RIN_LAB_PORT)
 }
 
 const app = new Elysia()
-.get('',()=>{return 'hi'})
+.get('/',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 
-	port:process.env.RIN_LAB_PORT||443,  
+	port:process.env.RIN_LAB_PORT||443,   
 	hostname:process.env.HOSTNAME || '0.0.0.0',
 	tls
 }

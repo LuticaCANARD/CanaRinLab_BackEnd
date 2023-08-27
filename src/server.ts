@@ -33,9 +33,9 @@ const app = new Elysia()
 )
 
 const ws_server = new Elysia()
+.get('/ws/check',()=>{return ''})
 .use(ws())
 .ws('/ws/discord',discordWsRouter)
-.ws('/ws/check',{})
 .listen(
 	{
 		port:process.env.WS_PORT||9999,

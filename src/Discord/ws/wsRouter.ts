@@ -4,7 +4,7 @@ import {WSTypedSchema,ElysiaWSOptions} from 'elysia/dist/ws'
 
 export const discordWsRouter: ElysiaWSOptions<string, WSTypedSchema<never>, {}> = {
 	open(ws){
-		
+		ws.send('sss')
 	},
 	message(ws,message) {
 		ws.send(message);

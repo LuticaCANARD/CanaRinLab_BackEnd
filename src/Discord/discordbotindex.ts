@@ -5,14 +5,17 @@ import { swagger } from '@elysiajs/swagger'
 
 const discordInit = async ({ body, set }) =>{
 
-	set.status = 200;
-	return {
-		test:"var"
-	};
+	if(body["type"] == 1){
+		set.status = 200;
+		return {
+			type:1
+		};
+	}
+
 }
 
 export const DiscordRouter = (app:Elysia <ElysiaInstance>) :Elysia<ElysiaInstance> => {
 	app
-	.get('/',discordInit)
+	.post('/',discordInit)
 	return app;
 }  

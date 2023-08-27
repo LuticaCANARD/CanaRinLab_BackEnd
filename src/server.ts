@@ -24,7 +24,7 @@ const app = new Elysia()
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 
-	port:process.env.RIN_LAB_PORT||80,  
+	port:process.env.RIN_LAB_PORT||443,  
 	hostname:process.env.HOSTNAME || '0.0.0.0',
 	tls
 }

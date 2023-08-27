@@ -5,7 +5,6 @@ import nacl from 'tweetnacl'
 
 
 const discordInit = async (c:Context<any>) =>{
-	console.log(c.headers);
 	const PUBLIC_KEY = process.env["PUBLIC_KEY"]
 	const signature = String(c.headers["x-signature-ed25519"]);
 	const timestamp = String(c.headers["x-signature-timestamp"]);

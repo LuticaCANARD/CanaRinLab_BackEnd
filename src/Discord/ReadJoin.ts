@@ -1,5 +1,5 @@
 import axios from "axios";
-import {discord_url,header} from "./headers"
+import {discord_url,discord_header} from "../Utils/headers"
 
 /**
  * 정시가 되면 이모지를 읽고,
@@ -11,7 +11,7 @@ export const DoReadAndCheck = async () =>{
   const channel_info = await axios({
     method: 'get',
     url: discord_url+`/channels/${process.env["channel_id"]}/messages`,
-    headers:header
+    headers:discord_header
   });
   
   const last_chat_id = channel_info["data"][0]["id"] // 마지막꺼 들고오는건데 채널 메세지 통제가 중요.
@@ -19,7 +19,7 @@ export const DoReadAndCheck = async () =>{
   const accept_reactions = await axios({
     method: 'get',
     url: discord_url+`/channels/${process.env["channel_id"]}/messages/${last_chat_id}/reactions/${process.env["emoji"]}`,
-    headers:header
+    headers:discord_header
   });
   const accepters = accept_reactions.data.map((u:any) =>u["id"])
   
@@ -29,7 +29,7 @@ export const DoReadAndCheck = async () =>{
     await axios({
       method: 'POST',
       url: discord_url+`/channels/${process.env["channel_id"]}/messages`,
-      headers:header,
+      headers:discord_header,
       data : {
         "content": "이번주 카지노는 휴무입니다."
       }
@@ -40,7 +40,7 @@ export const DoReadAndCheck = async () =>{
     const all_member = await axios({
       method: 'get',
       url: discord_url+`/guilds/${process.env["guild_id"]}/members?limit=999`,
-      headers:header
+      headers:discord_header
     })
     // 카지노 실행의 정족수 혹은 그 이상이 채워짐.
     // 인턴에 대한 방안 -> 새 array만들어서 걍 따로 밀어버리기.
@@ -50,7 +50,7 @@ export const DoReadAndCheck = async () =>{
     const orders_raw = await axios({
       method: 'get',
       url: discord_url+`/channels/${process.env["channel_id_role"]}/messages`,
-      headers:header
+      headers:discord_header
     });
     const order = orders_raw.data[0]["content"].replace(/, /g,',').replace(/ ,/g,',').split(',')
     let res = " 오늘의 역할 \n";
@@ -71,7 +71,7 @@ export const DoReadAndCheck = async () =>{
     await axios({
       method: 'POST',
       url: discord_url+`/channels/${process.env["channel_id"]}/messages`,
-      headers:header,
+      headers:discord_header,
       data : {
         "content": res
       }

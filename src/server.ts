@@ -4,9 +4,11 @@ import { VrcRouter } from "./vrchat/vrc_controller"
 import { DiscordRouter } from "./Discord/discordbotindex";
 //import * as WebControl from "./web/web_controller"
 //import { PrismaClient } from '@prisma/client'
-import { Elysia,Context } from 'elysia'
+import { Elysia,Context,ws } from 'elysia'
 import {readFileSync} from 'fs';
 import { buffer } from "stream/consumers";
+import {discordWsRouter} from './Discord/ws/wsRouter'
+import { swagger } from '@elysiajs/swagger'
 
 //const prisma = new PrismaClient()
 const PORT = Number(process.env.RIN_LAB_PORT) || 10000; 
@@ -26,10 +28,24 @@ const app = new Elysia()
 .listen({ 
 	port:process.env.RIN_LAB_PORT||443,   
 	hostname:process.env.HOSTNAME || '0.0.0.0',
-	tls
+	tls,
 }
-);
+)
+
+const ws_server = new Elysia()
+.use(ws())
+.ws('/ws/discord',discordWsRouter)
+.listen(
+	{
+		port:9999,
+		tls
+	}
+)
+
+
+;
 //console.log(process.env)
+
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
 //export default app

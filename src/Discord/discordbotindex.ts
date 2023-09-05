@@ -26,11 +26,20 @@ const discordInit = async (c:Context<any>) =>{
 			type:1
 		};
 	}
+	else {
+		c.set.status = 500;
+		return {
+			type:-1
+		};
+	}
 
 }
+
+
 
 export const DiscordRouter = (app:Elysia <ElysiaInstance>) :Elysia<ElysiaInstance> => {
 	app
 	.post('/',discordInit)
+
 	return app;
 }  

@@ -17,11 +17,14 @@ const tls:{
 }= {}
 if(!process.env.RIN_LAB_PORT)
 {
+	// 실서버에만 적용한다. localhost에 tls먹이기는 귀찮기때문.
+	// 하려면 발급해서 와도 되긴 하는데 
 	tls.cert = readFileSync('./keys/public.crt')
 	tls.key = readFileSync('./keys/private.key')
 }
 
 const app = new Elysia()
+.use(swagger())
 .get('/',()=>{return 'hi'})
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
@@ -54,7 +57,7 @@ const ws_server = new Elysia()
 //console.log(process.env)
 
 
-console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} / localhost:${app.server.port}`)
+console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} ${!process.env.RIN_LAB_PORT?'' :'/ localhost:'+app.server.port}`)
 console.log(`WEBSOCKET IS ON : ${ws_server.server.port}`)
 //export default app
 //const wsServer = new WebSocket.Server({ server, path: "/cana_rin_lab_ws" });

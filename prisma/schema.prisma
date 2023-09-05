@@ -9,6 +9,7 @@ datasource db {
   provider = "mysql"
   url = env("DATABASE_URL")
   relationMode = "prisma"
+
 }
 generator erd {
   provider = "prisma-erd-generator"
@@ -47,4 +48,10 @@ model StnName{
   HR_UNIT_HR_DV_CD Int @id
   STN_NM           String
   StnStat          RailStnStat[]
+}
+
+model VoteExecutor{
+  ServerId Int 
+  UserId Int
+  @@id([ServerId,UserId])
 }

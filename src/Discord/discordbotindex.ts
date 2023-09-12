@@ -2,6 +2,7 @@ import * as Utils from '../Utils/utils' // Formally.
 import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
 import { swagger } from '@elysiajs/swagger'
 import nacl from 'tweetnacl'
+import discordRouter from '../discordDeployer'
 
 
 const discordInit = async (c:Context<any>) =>{

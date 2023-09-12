@@ -9,7 +9,7 @@ const commandFiles = fs.readdirSync('./Discord/command').filter(file => file.end
 const dd:Array<DiscordCommandMeta> = [];
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
-	const command:DiscordCommandMeta = require(`./command/${file}`);
+	const command:DiscordCommandMeta = require(`./Discord/command/${file}`);
     dd.push(command);
 }
 

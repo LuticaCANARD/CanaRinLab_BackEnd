@@ -176,3 +176,9 @@ export type DiscordCommandResponseType = {
  * 
  * 
  */
+
+export type DiscordCommandMeta = {
+	name : string // Discord에 표시될 이름
+	description : string // 설명
+	execute : Function
+}

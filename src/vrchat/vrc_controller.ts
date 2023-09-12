@@ -21,9 +21,15 @@ const VrcGroup = (c:{ body, set })=>{
 	return {}
 }
 
-export const VrcRouter = (app:Elysia <ElysiaInstance>) :Elysia<ElysiaInstance> => {
+const SolidTable = (c:{ body, set })=>{
+	console.log('ss')
+	return {}
+}
+
+export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> => {
 	app
 	.get('/',VrcGroup)
+	.get('/SolidTable',SolidTable)
 
 	return app;
 } 

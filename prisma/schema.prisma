@@ -55,3 +55,18 @@ model VoteExecutor{
   UserId Int
   @@id([ServerId,UserId])
 }
+
+model CasinoRoles{
+  RoleName String @id
+  userId Int?
+}
+model CasinoMember{
+  name String
+  userId Int @id
+}
+
+model CasinoEvent{
+  time Int
+  userId Int
+  @@id([time,userId])
+}

@@ -22,10 +22,17 @@ if(!process.env.RIN_LAB_PORT)
 	tls.cert = readFileSync('./keys/public.crt')
 	tls.key = readFileSync('./keys/private.key')
 }
+else
+{
+	tls.cert = readFileSync('./keys/dev_pub_.pem')
+	tls.key = readFileSync('./keys/dev_pri.pem')
+}
 
 const app = new Elysia()
 .use(swagger())
-.get('/',()=>{return 'hi'})
+.get('/',()=>{
+	console.log('l')
+	return 'hi'})
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .listen({ 

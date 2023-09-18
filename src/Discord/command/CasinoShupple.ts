@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 const  {db} = require( '../../Utils/db')
 module.exports= {
 	data: new SlashCommandBuilder()
-		.setName('카지노 봅기')
+		.setName('카지노뽑기')
 		.setDescription('카지노에 참가할 인원을 체크하고, 이 인원을 랜덤으로 배치합니다.'),
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		const read = await db.

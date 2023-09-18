@@ -10,6 +10,12 @@ import { buffer } from "stream/consumers";
 import {discordWsRouter} from './Discord/ws/wsRouter'
 import { swagger } from '@elysiajs/swagger'
 
+import {Client, GatewayIntentBits} from "discord.js";
+import {registerCommands} from "./discordDeployer";
+
+
+
+
 //const prisma = new PrismaClient()
 const PORT = Number(process.env.RIN_LAB_PORT) || 10000; 
 const tls:{
@@ -57,12 +63,32 @@ const ws_server = new Elysia()
 		hostname:process.env.HOSTNAME || '0.0.0.0',
 		tls
 	}
-)
+);
 
 
-;
+
 //console.log(process.env)
 
+const client = new Client({intents: [GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildMembers]});
+
+// Slash Command 추가
+//registerCommands(process.env.DISCORD_BOT_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
+
+client.on('interactionCreate', async interaction => {
+    // Original: https://discordjs.guide/interactions/replying-to-slash-commands.html#receiving-interactions
+    if (!interaction.isCommand()) return;
+
+    if (interaction.commandName === '안녕하세요') {
+        await interaction.reply('인사 잘한다~');
+    }
+});
+
+client.login(process.env.DISCORD_BOT_TOKEN).then(function () {
+    console.log("LOGIN SUCCESS.");
+});
 
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} ${!process.env.RIN_LAB_PORT?'' :'/ localhost:'+app.server.port}`)
 console.log(`WEBSOCKET IS ON : ${ws_server.server.port}`)

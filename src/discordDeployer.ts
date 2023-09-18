@@ -2,24 +2,16 @@
  * Command : function 의 Key-value 
  */
 
-import {DiscordCommandMeta} from './Discord/command/Discord_type_utils/discordTypes'
-import fs from 'fs'
-import path from 'path';
+import {SlashCommandBuilder,REST,Routes} from "discord.js";
 
-const dirPath = path.resolve(__dirname, './Discord/command/');
-const commandFiles = fs.readdirSync(dirPath).filter(file => file.endsWith('.js'));
-const dd:Array<DiscordCommandMeta> = [];
-// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-for (const file of commandFiles) {
-	const command:DiscordCommandMeta = require(path.resolve(__dirname, `./Discord/command/${file}`));
-    dd.push(command);
+const commands = [
+    new SlashCommandBuilder().setName('안녕하세요').setDescription('인사를 합니다.'),
+].map(command => command.toJSON());
+
+export const registerCommands = (token, clientId, guildId) => {
+    const rest = new REST({version: '9'}).setToken(token);
+
+    rest.put(Routes.applicationGuildCommands(clientId, guildId), {body: commands})
+        .then(() => console.log('Successfully registered application commands.'))
+        .catch(console.error);
 }
-
-const discord_command = dd.reduce((newObj, obj) => {
-    newObj[obj.names] = obj;
-    return newObj;
-}, {});
-
-
-
-export default discord_command;

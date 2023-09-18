@@ -3,7 +3,7 @@ const meta:DiscordCommandMeta = {
     names: "ping",
     description: "pong",
     execute: ()=>{
-
+        
 	}
 };
 export default meta;

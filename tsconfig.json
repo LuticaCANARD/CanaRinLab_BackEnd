@@ -1,13 +1,28 @@
 {
     "compilerOptions": {
-        "module": "nodenext",
-        "target": "ES6",
-        "esModuleInterop": true,
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "resolveJsonModule": true,
+        "types": ["bun-types"],
 
-        
+        // enable latest features
+        "lib": ["esnext","ES6","ES2021"],
+        "module": "esnext",
+        "target": "esnext",
+    
+        // if TS 5.x+
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "moduleDetection": "force",
+        // if TS 4.x or earlier
+        // "moduleResolution": "nodenext",
+    
+        //"jsx": "react-jsx", // support JSX
+        "allowJs": true, // allow importing `.js` from `.ts`
+        "esModuleInterop": true, // allow default imports for CommonJS modules
+    
+        // best practices
+        //"strict": true,
+        //"forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
     },
     "include": ["src/*", "src/Discord/ws"]
 

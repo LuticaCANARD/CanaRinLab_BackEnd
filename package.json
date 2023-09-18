@@ -48,6 +48,6 @@
     "dev": "prisma generate | bun --hot src/server.ts",
     "test": "jest",
     "db:push": "prisma db push",
-    "generate": "prisma generate"
+    "generate": "prisma generate" 
   }
 }

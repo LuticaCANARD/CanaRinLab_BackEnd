@@ -75,7 +75,7 @@ const client = new Client({intents: [GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers]});
 
 // Slash Command 추가
-//registerCommands(process.env.DISCORD_BOT_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
+registerCommands(process.env.DISCORD_BOT_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
 
 client.on('interactionCreate', async interaction => {
     // Original: https://discordjs.guide/interactions/replying-to-slash-commands.html#receiving-interactions
@@ -89,7 +89,6 @@ client.on('interactionCreate', async interaction => {
 client.login(process.env.DISCORD_BOT_TOKEN).then(function () {
     console.log("LOGIN SUCCESS.");
 });
-
 console.log(`🦊 Elysia is running at ${app.server.hostname}:${app.server.port} ${!process.env.RIN_LAB_PORT?'' :'/ localhost:'+app.server.port}`)
 console.log(`WEBSOCKET IS ON : ${ws_server.server.port}`)
 //export default app

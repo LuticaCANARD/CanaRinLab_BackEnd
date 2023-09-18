@@ -1,4 +1,4 @@
-import { DB } from '../../prisma/generated/types'
+import { DB } from '../TYPES/types'
 import { createPool } from 'mysql2' // do not use 'mysql2/promises'!
 import { Kysely, MysqlDialect } from 'kysely'
 

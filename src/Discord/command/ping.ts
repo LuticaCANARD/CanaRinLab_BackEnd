@@ -1,9 +1,12 @@
-import {DiscordCommandMeta} from './Discord_type_utils/discordTypes'
-const meta:DiscordCommandMeta = {
-    names: "ping",
-    description: "pong",
-    execute: ()=>{
-        
-	}
+const { SlashCommandBuilder } = require('discord.js');
+
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('ping')
+		.setDescription('pong'),
+	async execute(interaction) {
+		
+		await interaction.reply('Pong!');
+	},
 };
-export default meta;

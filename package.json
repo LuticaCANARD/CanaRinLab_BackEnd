@@ -22,7 +22,7 @@
     "@elysiajs/cookie": "^0.6.1",
     "@elysiajs/fn": "^0.5.2",
     "@elysiajs/swagger": "^0.6.1",
-    "@prisma/client": "^4.15.0",
+    "@prisma/client": "latest",
     "@types/express-ws": "^3.0.1",
     "@types/ws": "^8.5.4",
     "axios": "^1.5.0",
@@ -48,6 +48,6 @@
     "dev": "prisma generate | bun --hot src/server.ts",
     "test": "jest",
     "db:push": "prisma db push",
-    "generate": "prisma generate" 
+    "generate": "prisma generate"
   }
 }

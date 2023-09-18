@@ -81,7 +81,6 @@ const client = new Client({
 		GatewayIntentBits.GuildMembers,
 	] })
 const commands = new Collection<string,any>() 
-//http.createServer(function (request, response) {}).listen(process.env.PORT||5000); // FOR HEROKU.
 const commandsPath = path.join(__dirname, './Discord/command');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
 

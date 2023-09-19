@@ -25,7 +25,9 @@ export const executeCommand = () =>{
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
         const command = require(path.join(path_d,`/${file}`));
-        commands.push(command.data.toJSON());
+        console.log(command)
+        if(command.__esModule) commands.push(command.default.data.toJSON())
+        else commands.push(command.data.toJSON());
     }
 
     // Construct and prepare an instance of the REST module

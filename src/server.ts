@@ -88,9 +88,13 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
+	console.log(command)
 	if ('data' in command && 'execute' in command) {
+		
 		commands.set(command.data.name, command);
-	} else {
+	} 
+	else if(command.__esModule && 'data' in command.default && 'execute' in command.default ) commands.set(command.default.data.name, command.default);
+	else {
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }

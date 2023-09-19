@@ -14,10 +14,11 @@ module.exports= {
 		.where("CasinoChat.id","=",Number(p.guildId))
 		.select("CasinoChat.chatId")
 		.execute();
+
 		if(read.length>0) await db.updateTable("CasinoChat").set({"chatId":Number(p.id)}).where("CasinoChat.id","=",Number(p.guildId)).execute();
-		else await db.insertInto("CasinoChat").values([{"id" : Number(p.guildId),"chatId":Number(p.id)}]).execute();
+		else await db.insertInto("CasinoChat").values([{"id" : p.guildId,"chatId":Number(p.id)}]).execute();
 
-
+		
 	}
 	
 }; 

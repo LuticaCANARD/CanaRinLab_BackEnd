@@ -24,9 +24,11 @@ export default {
 		.select("CasinoChat.chatId")
 		.execute();
 		console.log('aa')
-		const f = interaction.channel?.messages.fetch(read["chatId"]);
-		//.then(message => console.log(message.content)).catch(console.error);
-		//await p.react('✅')
+		const f = await interaction.channel?.messages.fetch(read["chatId"]);
+		const reacts = f?.reactions;
+		console.log(reacts);
+
+		await interaction.reply({content:'aaa'})
 
 		//if(read.length>0) await db.updateTable("CasinoChat").set({"chatId":Number(p.id)}).where("CasinoChat.id","=",Number(p.guildId)).execute();
 		//else await db.insertInto("CasinoChat").values([{"id" : Number(p.guildId),"chatId":Number(p.id)}]).execute();

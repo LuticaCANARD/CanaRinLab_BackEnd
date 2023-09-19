@@ -72,7 +72,7 @@ model CasinoEvent{
   @@id([time,userId])
 }
 model CasinoChat{
-  id Int @id
-  chatId Int
+  id BigInt @id
+  chatId BigInt
   
 }

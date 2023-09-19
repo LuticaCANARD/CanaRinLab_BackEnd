@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../Utils/db';
 import { ReturningNode } from 'kysely';
+import { casino_min } from '../discordPref';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -27,9 +28,11 @@ export default {
 		const reacts = f?.reactions.cache.get('✅');
 		const g = await reacts?.users.fetch({});
 		const joinner = new Map();
-		let memberids = g?.map(p=>{
-			joinner.set(p.id,true)
-			return p.id})
+		let memberids_ = g?.filter(p=>!p.bot)
+		let memberids = memberids_?.map(j=>{
+			joinner.set(j.id,true)		
+			return j.id;
+		})
 		
 
 		const argus = new Map()
@@ -39,7 +42,7 @@ export default {
 
 
 		if (!memberids
-			//||memberids.length<7
+			||memberids.length<casino_min
 			) 
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
 			
@@ -47,7 +50,7 @@ export default {
 		member_nicks.sort(() => Math.random()-0.5) // 섞음
 
 		let str_val = '오늘의 카지노 \n'
-		let counter = 0;
+		
 		str_val +=''
 		const roles_ = await db.selectFrom("CasinoRoles").select(["CasinoRoles.RoleName","CasinoRoles.userId","CasinoRoles.Priority"]).orderBy("CasinoRoles.Priority").execute();
 		if(sttr){
@@ -60,7 +63,7 @@ export default {
 			}
 		}
 
-
+		let counter = 1;
 		for(let rl of roles_){
 			const rname = rl["RoleName"];
 			const res_member = role_addt.get(rname);
@@ -69,10 +72,10 @@ export default {
 				str_val += `${rname} : <@${rl["userId"]}>\n`
 			}
 			else {
-				str_val += `${rname} : <@${member_nicks[counter]["userId"]}>\n`
+				str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
 				counter ++ ;
 			}
-			if(counter >= member_nicks.length) break;
+			if(counter > member_nicks.length) break;
 		}
 
 		str_val+= ''

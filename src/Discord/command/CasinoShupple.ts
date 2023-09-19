@@ -1,37 +1,86 @@
-const { SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../Utils/db';
+import { ReturningNode } from 'kysely';
+
 export default {
 	data: new SlashCommandBuilder()
 		.setName('카지노뽑기')
 		.setDescription('카지노에 참가할 인원을 체크하고, 이 인원을 랜덤으로 배치합니다.')
 		.addStringOption(option =>
-			option.setName('category')
-				.setDescription('The gif category')
-				.setRequired(true)
-				.addChoices(
-					{ name: 'Funny', value: 'gif_funny' },
-					{ name: 'Meme', value: 'gif_meme' },
-					{ name: 'Movie', value: 'gif_movie' },
-				)
-						
+			option.setName('역할지정')
+				.setDescription('멤버 멘션:역할 (구분은 쉼표(,))')
+				.setRequired(false)
+		)
+		.addBooleanOption(option=>
+			option.setName("인턴")
+			.setDescription('인턴')
 		)
 		,
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		const read = await db.
 		selectFrom("CasinoChat")
-		.where("CasinoChat.id","=",Number(interaction.guildId))
+		.where("CasinoChat.id","=",interaction.guildId)
 		.select("CasinoChat.chatId")
 		.execute();
-		console.log(Number(interaction.guildId))
-		const f = await interaction.channel?.messages.fetch(String(read[0]["chatId"]));
-		const reacts = f?.reactions;
-		console.log(reacts);
+		const f = await interaction.channel?.messages.fetch(read[0]["chatId"]);
+		const reacts = f?.reactions.cache.get('✅');
+		const g = await reacts?.users.fetch({});
+		const joinner = new Map();
+		let memberids = g?.map(p=>{
+			joinner.set(p.id,true)
+			return p.id})
+		
 
-		await interaction.reply({content:'aaa'})
+		const argus = new Map()
+		interaction.options.data.map(a=>argus.set(a.name,a.value))
+		const sttr = argus?.get("역할지정")?.replace(/, /g,',').replace(/ ,/g,',').split(',')
+		const role_addt = new Map()
 
-		//if(read.length>0) await db.updateTable("CasinoChat").set({"chatId":Number(p.id)}).where("CasinoChat.id","=",Number(p.guildId)).execute();
-		//else await db.insertInto("CasinoChat").values([{"id" : Number(p.guildId),"chatId":Number(p.id)}]).execute();
+
+		if (!memberids
+			//||memberids.length<7
+			) 
+			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
+			
+		const member_nicks = await db.selectFrom("CasinoMember").where("CasinoMember.userId","in",memberids).select(["CasinoMember.name","CasinoMember.userId"]).execute();
+		member_nicks.sort(() => Math.random()-0.5) // 섞음
+
+		let str_val = '오늘의 카지노 \n'
+		let counter = 0;
+		str_val +=''
+		const roles_ = await db.selectFrom("CasinoRoles").select(["CasinoRoles.RoleName","CasinoRoles.userId","CasinoRoles.Priority"]).orderBy("CasinoRoles.Priority").execute();
+		if(sttr){
+			for(let v of sttr ){
+				const arrs = v.split(':')
+				const pz = arrs[0].replace(/<@|>/g,'')
+				const role = arrs[1]
+				memberids = memberids.filter(item => item !== pz);
+				role_addt.set(role,pz);
+			}
+		}
+
+
+		for(let rl of roles_){
+			const rname = rl["RoleName"];
+			const res_member = role_addt.get(rname);
+			if(res_member) str_val += `${rname} : <@${res_member}>\n`
+			else if(rl["userId"]&&joinner.get(rl["userId"])){
+				str_val += `${rname} : <@${rl["userId"]}>\n`
+			}
+			else {
+				str_val += `${rname} : <@${member_nicks[counter]["userId"]}>\n`
+				counter ++ ;
+			}
+			if(counter >= member_nicks.length) break;
+		}
+
+		str_val+= ''
+
+
+		await interaction.reply({content:str_val})
+
+
 	}
 	
 }; 

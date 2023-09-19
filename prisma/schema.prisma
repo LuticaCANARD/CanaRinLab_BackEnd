@@ -58,21 +58,24 @@ model VoteExecutor{
 }
 
 model CasinoRoles{
-  RoleName String @id
-  userId Int?
+  Priority Int @id @default(autoincrement())
+  RoleName String 
+  userId String?
+
 }
 model CasinoMember{
-  name String
-  userId Int @id
+  name String?
+  userId String @id
+  intern Boolean
 }
 
 model CasinoEvent{
-  time Int
-  userId Int
+  time DateTime
+  userId String
   @@id([time,userId])
 }
 model CasinoChat{
-  id BigInt @id
-  chatId BigInt
+  id String @id
+  chatId String
   
 }

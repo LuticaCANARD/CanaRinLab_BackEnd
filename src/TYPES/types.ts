@@ -3,20 +3,22 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U> ? Col
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type CasinoChat = {
-  id: number;
-  chatId: number;
+  id: string;
+  chatId: string;
 };
 export type CasinoEvent = {
-  time: number;
-  userId: number;
+  time: Timestamp;
+  userId: string;
 };
 export type CasinoMember = {
-  name: string;
-  userId: number;
+  name: string | null;
+  userId: string;
+  intern: number;
 };
 export type CasinoRoles = {
+  Priority: Generated<number>;
   RoleName: string;
-  userId: number | null;
+  userId: string | null;
 };
 export type DateWeek = {
   DateId: number;

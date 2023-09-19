@@ -23,8 +23,8 @@ export default {
 		.where("CasinoChat.id","=",Number(interaction.guildId))
 		.select("CasinoChat.chatId")
 		.execute();
-		console.log('aa')
-		const f = await interaction.channel?.messages.fetch(read["chatId"]);
+		console.log(Number(interaction.guildId))
+		const f = await interaction.channel?.messages.fetch(String(read[0]["chatId"]));
 		const reacts = f?.reactions;
 		console.log(reacts);
 

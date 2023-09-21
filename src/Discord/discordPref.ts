@@ -1,2 +1,2 @@
-export const administer_role_id = "1027980021169656019";
+export const administer_role_id = "1047098140840431666";
 export const casino_min = 1;

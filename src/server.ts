@@ -82,22 +82,25 @@ const client = new Client({
 	] })
 const commands = new Collection<string,any>() 
 const commandsPath = path.join(__dirname, './Discord/command');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
-
-
-for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	if ('data' in command && 'execute' in command) {
-		
-		commands.set(command.data.name, command);
-	} 
-	else if(command.__esModule && 'data' in command.default && 'execute' in command.default ) commands.set(command.default.data.name, command.default);
-	else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+const dirs = fs.readdirSync(commandsPath);
+for (const dir of dirs){
+	const now_path = path.join(commandsPath,'./'+dir);
+	const commandFiles = fs.readdirSync(now_path).filter(file => file.endsWith('.ts'));
+	for (const file of commandFiles) {
+		const filePath = path.join(now_path, file);
+		const command = require(filePath);
+		if ('data' in command && 'execute' in command) {
+			
+			commands.set(command.data.name, command);
+		} 
+		else if(command.__esModule && 'data' in command.default && 'execute' in command.default ) commands.set(command.default.data.name, command.default);
+		else {
+			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
 	}
-}
 	
+}
+
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 	const command = commands.get(interaction.commandName);

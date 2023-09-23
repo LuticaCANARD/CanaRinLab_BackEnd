@@ -57,6 +57,20 @@ model VoteExecutor{
   @@id([ServerId,UserId])
 }
 
+//-----------------------디코봇용
+
+
+model ServerPref{
+  prefKey String @id
+  value String 
+}
+
+model DiscordServer{
+  GuildId String @id
+}
+
+//-----------------------카지노용
+
 model CasinoRoles{
   Priority Int @id @default(autoincrement())
   RoleName String 

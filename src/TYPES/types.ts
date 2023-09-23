@@ -26,12 +26,19 @@ export type DateWeek = {
   DAY_DV_CD_NM: string;
   BIZ_DD_STG_CD_NM: string;
 };
+export type DiscordServer = {
+  GuildId: string;
+};
 export type RailStnStat = {
   DateId: number;
   EXTR_STN_CD: number;
   HR_UNIT_HR_DV_CD: number;
   ABRD_PRNB: number;
   GOFF_PRNB: number;
+};
+export type ServerPref = {
+  prefKey: string;
+  value: string;
 };
 export type StnName = {
   HR_UNIT_HR_DV_CD: number;
@@ -52,7 +59,9 @@ export type DB = {
   CasinoMember: CasinoMember;
   CasinoRoles: CasinoRoles;
   DateWeek: DateWeek;
+  DiscordServer: DiscordServer;
   RailStnStat: RailStnStat;
+  ServerPref: ServerPref;
   StnName: StnName;
   User: User;
   VoteExecutor: VoteExecutor;

@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType ,GuildMemberRoleManager } from 'discord.js';
-import { db } from '../../Utils/db';
-import { administer_role_id } from '../discordPref';
+import { db } from '../../../Utils/db';
+import { administer_role_id } from '../../discordPref';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('카지노등록')

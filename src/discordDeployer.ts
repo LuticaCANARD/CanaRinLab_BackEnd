@@ -14,7 +14,7 @@ export const executeCommand = () =>{
 
     clientId = process.env.CLIENT_ID;
     guildId = process.env.TO_REGISTER_GUILD;
-
+    let casinoguildId = process.env.TO_REGISTER_GUILD_CASINO;
     const token = process.env.DISCORD_BOT_TOKEN;
 
     const path_d = path.join(__dirname, './Discord/command');
@@ -27,6 +27,15 @@ export const executeCommand = () =>{
         const command = require(path.join(path_d,`/${file}`));
         if(command.__esModule) commands.push(command.default.data.toJSON())
         else commands.push(command.data.toJSON());
+    }
+    const path_casino = path.join(__dirname, './Discord/command/Casino');
+    const CasinoCommandFiles = fs.readdirSync(path_casino).filter(file => file.endsWith('.ts'));
+
+    const CasinoCommand = [];
+    for (const file of CasinoCommandFiles) {
+        const command = require(path.join(path_d,`/${file}`));
+        if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
+        else CasinoCommand.push(command.data.toJSON());
     }
 
     // Construct and prepare an instance of the REST module
@@ -44,6 +53,14 @@ export const executeCommand = () =>{
             );
 
             console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+            console.log('Casino commands...')
+
+            const data2 = await rest.put(
+                Routes.applicationGuildCommands(clientId, casinoguildId),
+                { body: CasinoCommand },
+            );
+            console.log(`Successfully reloaded ${data2.length} application (/) commands.`);
+
         } catch (error) {
             // And of course, make sure you catch and log any errors!
             console.error(error);

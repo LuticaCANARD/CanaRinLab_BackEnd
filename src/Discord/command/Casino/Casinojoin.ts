@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
-import {db} from '../../Utils/db'
+import {db} from '../../../Utils/db'
 export default {
 	data: new SlashCommandBuilder()
 		.setName('카지노체크')

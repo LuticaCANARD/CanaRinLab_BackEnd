@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
-import { db } from '../../Utils/db';
+import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
-import { casino_min } from '../discordPref';
+import { casino_min } from '../../discordPref';
 
 export default {
 	data: new SlashCommandBuilder()

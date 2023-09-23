@@ -2,7 +2,6 @@ import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
-import { casino_min } from '../../discordPref';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -40,7 +39,8 @@ export default {
 		const sttr = argus?.get("역할지정")?.replace(/, /g,',').replace(/ ,/g,',').split(',')
 		const role_addt = new Map()
 
-
+		const casino_min_ = await db.selectFrom("ServerPref").select("value").where("ServerPref.prefKey","=","casino_min").execute();
+		const casino_min = Number(casino_min_[0].value)
 		if (!memberids
 			||memberids.length<casino_min
 			) 

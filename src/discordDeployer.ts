@@ -21,7 +21,7 @@ export const executeCommand = () =>{
     const commands = [];
     // Grab all the command files from the commands directory you created earlier
     const commandFiles = fs.readdirSync(path_d).filter(file => file.endsWith('.ts'));
-
+    console.log(commandFiles)
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
         const command = require(path.join(path_d,`/${file}`));
@@ -33,7 +33,7 @@ export const executeCommand = () =>{
 
     const CasinoCommand = [];
     for (const file of CasinoCommandFiles) {
-        const command = require(path.join(path_d,`/${file}`));
+        const command = require(path.join(path_casino,`/${file}`));
         if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
         else CasinoCommand.push(command.data.toJSON());
     }

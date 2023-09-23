@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "types": ["bun-types"],
+        "types": ["bun-types","jest"],
 
         // enable latest features
         "lib": ["esnext","ES6","ES2021"],

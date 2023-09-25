@@ -36,6 +36,7 @@ export const executeCommand = () =>{
         if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
         else CasinoCommand.push(command.data.toJSON());
     }
+    
 
     // Construct and prepare an instance of the REST module
     const rest = new REST({ version: '10' }).setToken(token);

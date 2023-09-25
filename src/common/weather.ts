@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment, { now } from 'moment'
-export const getWeather = async () => {
+export const getWeather = async (nx:BigInt,ny:BigInt,row:BigInt) => {
 	const url = "";
 
 	let setdaet = moment().format('YYYYMMDD');
@@ -13,14 +13,14 @@ export const getWeather = async () => {
 	}
 	var queryParams = '?' + encodeURIComponent('serviceKey') + '='+process.env["WEATHER_KEY"];
 	queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); 
-	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); 
+	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(String(row)); 
 	queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); 
 	queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(setdaet); 
 	queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0600');
-	queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('56'); 
-	queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('131');
+	queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent(String(nx)); 
+	queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent(String(ny));
 	const weather = await axios.get('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'+queryParams)
-	console.log(weather.data);
+	return weather;
 
 	// https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
 	// getUltraSrtNcst/key/...

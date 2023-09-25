@@ -65,6 +65,8 @@ export default {
 
 		let counter = 1;
 		for(let rl of roles_){
+			if(counter > member_nicks.length) break;
+
 			const rname = rl["RoleName"];
 			const res_member = role_addt.get(rname);
 			if(res_member) str_val += `${rname} : <@${res_member}>\n`
@@ -75,7 +77,6 @@ export default {
 				str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
 				counter ++ ;
 			}
-			if(counter > member_nicks.length) break;
 		}
 
 		str_val+= ''

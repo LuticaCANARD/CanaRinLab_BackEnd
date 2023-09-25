@@ -64,8 +64,8 @@ export default {
 		}
 
 		let counter = 1;
+		console.log(member_nicks)
 		for(let rl of roles_){
-			if(counter > member_nicks.length) break;
 
 			const rname = rl["RoleName"];
 			const res_member = role_addt.get(rname);
@@ -77,6 +77,8 @@ export default {
 				str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
 				counter ++ ;
 			}
+			if(counter > member_nicks.length) break;
+
 		}
 
 		str_val+= ''

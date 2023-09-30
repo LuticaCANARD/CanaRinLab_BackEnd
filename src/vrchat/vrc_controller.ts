@@ -26,7 +26,12 @@ const SolidTable = (c:{ body, set })=>{
 	return {}
 };
 const getWeatherCondiotion = (c:Context<any,any>) =>{
-	console.log(c);
+	const x = BigInt(Number(c.query["x"])),y = BigInt(Number(c.query["y"]));
+	const weather = getWeather(x,y,BigInt(1000))
+	return {};
+}
+const getPlayerHeader =  (c:Context<any,any>) =>{
+	console.log(c.headers);
 	return {};
 }
 
@@ -35,6 +40,7 @@ export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> 
 	.get('/',VrcGroup)
 	.get('/SolidTable',SolidTable)
 	.get('/weather',getWeatherCondiotion)
+	.get('/checker',getPlayerHeader)
 
 	return app;
 } 

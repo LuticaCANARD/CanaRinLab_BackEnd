@@ -6,7 +6,6 @@
 import * as RinLib from './libproj/canarinlib' // Cana rin Lib project
 import * as RinWet from './weatherproj/canarinwet'
 import * as Utils from '../Utils/utils' // Formally.
-
 import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
 import {getWeather} from '../common/weather'
 import { SHA256 } from 'bun'

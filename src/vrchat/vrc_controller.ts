@@ -34,7 +34,7 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	//console.log(c.headers);
-	//c.set.headers["set-cookie"] = "key=val;";
+	c.set.headers["set-cookie"] = "key=val;";
 
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {

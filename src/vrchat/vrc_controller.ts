@@ -37,6 +37,7 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	const v = c.headers;
 	v["x-forwarded-for"] = SHA256.hash(v["x-forwarded-for"]).toLocaleString();
+	v["x-amzn-trace-id"] = "-";
 	console.log(v);
 	c.set.headers["set-cookie"] = "key="+SHA256.hash(v["x-forwarded-for"]).toLocaleString()+";";
 

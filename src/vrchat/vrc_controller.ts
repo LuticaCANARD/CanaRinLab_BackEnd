@@ -39,7 +39,7 @@ const getPlayerHeader =  (c:Context<any,any>) =>{
 	v["x-amzn-trace-id"] = "-";
 	v["host"] = "-";
 	c.set.headers["set-cookie"] = "key="+String(SHA256.hash(v["x-forwarded-for"]))+";";
-
+	console.log(v);
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {
 		"something" : "cool!"

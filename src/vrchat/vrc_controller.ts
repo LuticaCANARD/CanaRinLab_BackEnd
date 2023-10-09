@@ -36,11 +36,11 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	const v = c.headers;
-	v["x-forwarded-for"] = SHA256.hash(v["x-forwarded-for"]).toLocaleString();
+	v["x-forwarded-for"] = String(SHA256.hash(v["x-forwarded-for"]));
 	v["x-amzn-trace-id"] = "-";
 	v["host"] = "-";
 	console.log(v);
-	c.set.headers["set-cookie"] = "key="+SHA256.hash(v["x-forwarded-for"]).toLocaleString()+";";
+	c.set.headers["set-cookie"] = "key="+String(SHA256.hash(v["x-forwarded-for"]))+";";
 
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {

@@ -8,6 +8,7 @@ import * as RinWet from './weatherproj/canarinwet'
 import * as Utils from '../Utils/utils' // Formally.
 import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
 import {getWeather} from '../common/weather'
+
 export module VrcControl {
 	let db = Utils.DBpool
 	//
@@ -17,22 +18,28 @@ export module VrcControl {
 
 }
 
-const VrcGroup = (c:{ body, set })=>{
+const VrcGroup = (c:Context<any,any>)=>{
 	return {}
 };
 
-const SolidTable = (c:{ body, set })=>{
+const SolidTable = (c:Context<any,any>)=>{
 	console.log('ss')
 	return {}
 };
-const getWeatherCondiotion = (c:Context<any,any>) =>{
+const getWeatherCondiotion = async (c:Context<any,any>) =>{
 	const x = BigInt(Number(c.query["x"])),y = BigInt(Number(c.query["y"]));
-	const weather = getWeather(x,y,BigInt(1000))
-	return {};
+	const weather = await getWeather(x,y,BigInt(1000))
+	console.log(weather["data"]["response"]["header"])
+	return weather["data"]["response"]["body"];
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	console.log(c.headers);
-	return {};
+	c.set.headers["set-cookie"] = "key=val;";
+
+	if(c.query["fail"]=="1") c.set.status = 400;
+	return {
+		"something" : "cool!"
+	};
 }
 
 export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> => {

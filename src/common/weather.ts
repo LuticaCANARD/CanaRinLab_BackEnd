@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment, { now } from 'moment'
-export const getWeather = async (nx:BigInt,ny:BigInt,row:BigInt) => {
+export const getWeather = async (nx:BigInt|Number,ny:BigInt|Number,row:BigInt|Number) => {
 	const url = "";
 
 	let setdaet = moment().format('YYYYMMDD');
@@ -16,10 +16,10 @@ export const getWeather = async (nx:BigInt,ny:BigInt,row:BigInt) => {
 	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(String(row)); 
 	queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); 
 	queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(setdaet); 
-	queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0600');
+	queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0500');
 	queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent(String(nx)); 
 	queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent(String(ny));
-	const weather = await axios.get('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'+queryParams)
+	const weather = await axios.get('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'+queryParams)
 	return weather;
 
 	// https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst

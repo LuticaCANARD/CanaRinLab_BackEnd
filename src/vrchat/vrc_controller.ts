@@ -6,9 +6,10 @@
 import * as RinLib from './libproj/canarinlib' // Cana rin Lib project
 import * as RinWet from './weatherproj/canarinwet'
 import * as Utils from '../Utils/utils' // Formally.
+
 import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
 import {getWeather} from '../common/weather'
-import { MD5 } from 'bun'
+import { SHA256 } from 'bun'
 
 export module VrcControl {
 	let db = Utils.DBpool
@@ -35,9 +36,9 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	const v = c.headers;
-	v["x-forwarded-for"] = MD5.hash(v["x-forwarded-for"]).toString();
+	v["x-forwarded-for"] = SHA256.hash(v["x-forwarded-for"]).toLocaleString();
 	console.log(v);
-	c.set.headers["set-cookie"] = "key="+MD5.hash(v["x-forwarded-for"]).toString()+";";
+	c.set.headers["set-cookie"] = "key="+SHA256.hash(v["x-forwarded-for"]).toLocaleString()+";";
 
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {

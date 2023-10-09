@@ -8,6 +8,7 @@ import * as RinWet from './weatherproj/canarinwet'
 import * as Utils from '../Utils/utils' // Formally.
 import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
 import {getWeather} from '../common/weather'
+import { MD5 } from 'bun'
 
 export module VrcControl {
 	let db = Utils.DBpool
@@ -34,9 +35,9 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	const v = c.headers;
-	v["x-forwarded-for"] = "ip";
+	v["x-forwarded-for"] = MD5.hash(v["x-forwarded-for"]).toString();
 	console.log(v);
-	c.set.headers["set-cookie"] = "key=val;";
+	c.set.headers["set-cookie"] = "key="+MD5.hash(v["x-forwarded-for"]).toString()+";";
 
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {

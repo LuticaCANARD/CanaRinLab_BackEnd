@@ -34,12 +34,12 @@ const getWeatherCondiotion = async (c:Context<any,any>) =>{
 	return weather["data"]["response"]["body"];
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
-	const v = c.headers;
-	v["x-forwarded-for"] = String(SHA256.hash(v["x-forwarded-for"]));
-	v["x-amzn-trace-id"] = "-";
-	v["host"] = "-";
-	c.set.headers["set-cookie"] = "key="+String(SHA256.hash(v["x-forwarded-for"]))+";";
-	console.log(v);
+	// const v = c.headers;
+	// v["x-forwarded-for"] = String(SHA256.hash(v["x-forwarded-for"]));
+	// v["x-amzn-trace-id"] = "-";
+	// v["host"] = "-";
+	// c.set.headers["set-cookie"] = "key="+String(SHA256.hash(v["x-forwarded-for"]))+";";
+	// console.log(v);
 	if(c.query["fail"]=="1") c.set.status = 400;
 	return {
 		"something" : "cool!"

@@ -17,25 +17,23 @@ export const executeCommand = () =>{
     let casinoguildId = process.env.TO_REGISTER_GUILD_CASINO;
     const token = process.env.DISCORD_BOT_TOKEN;
 
-    const path_d = path.join(__dirname, './Discord/command/normal');
-    const commands = [];
-    // Grab all the command files from the commands directory you created earlier
-    const commandFiles = fs.readdirSync(path_d).filter(file => file.endsWith('.ts'));
-    // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-    for (const file of commandFiles) {
-        const command = require(path.join(path_d,`/${file}`));
-        if(command.__esModule) commands.push(command.default.data.toJSON())
-        else commands.push(command.data.toJSON());
-    }
-    const path_casino = path.join(__dirname, './Discord/command/Casino');
-    const CasinoCommandFiles = fs.readdirSync(path_casino).filter(file => file.endsWith('.ts'));
 
-    const CasinoCommand = commands;
-    for (const file of CasinoCommandFiles) {
-        const command = require(path.join(path_casino,`/${file}`));
-        if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
-        else CasinoCommand.push(command.data.toJSON());
+
+    const getNormalCommands = () =>{
+        const path_d = path.join(__dirname, './Discord/command/normal');
+        const commands = [];
+        // Grab all the command files from the commands directory you created earlier
+        const commandFiles = fs.readdirSync(path_d).filter(file => file.endsWith('.ts'));
+        // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+        for (const file of commandFiles) {
+            const command = require(path.join(path_d,`/${file}`));
+            if(command.__esModule) commands.push(command.default.data.toJSON())
+            else commands.push(command.data.toJSON());
+        }
+        return commands;
     }
+
+    
     
 
     // Construct and prepare an instance of the REST module
@@ -44,22 +42,41 @@ export const executeCommand = () =>{
     // and deploy your commands!
     (async () => {
         try {
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
+            const normal_coms = getNormalCommands();
+            console.log(`Started refreshing ${normal_coms.length} application (/) commands.`);
 
             // The put method is used to fully refresh all commands in the guild with the current set
+
+            const rest = new REST({ version: '9' }).setToken(token);
+            // const killer = await rest.get(Routes.applicationGuildCommands(clientId, guildId))
+
+            // const urls = killer.map(data => `${Routes.applicationGuildCommands(clientId, guildId)}/${data.id}`)
+            // const v = urls.map( u=>rest.delete(u));
+            //for(const p of v) await p;
             const data = await rest.put(
                 Routes.applicationGuildCommands(clientId, guildId),
-                { body: commands },
+                { body: normal_coms },
             );
 
             console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-            console.log('Casino commands...')
+            if(casinoguildId) {
+                const path_casino = path.join(__dirname, './Discord/command/Casino');
+                const CasinoCommand = getNormalCommands();
+                const CasinoCommandFiles = fs.readdirSync(path_casino).filter(file => file.endsWith('.ts'));
 
-            const data2 = await rest.put(
-                Routes.applicationGuildCommands(clientId, casinoguildId),
-                { body: CasinoCommand },
-            );
-            console.log(`Successfully reloaded ${data2.length} application (/) commands.`);
+                for (const file of CasinoCommandFiles) {
+                    const command = require(path.join(path_casino,`/${file}`));
+                    if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
+                    else CasinoCommand.push(command.data.toJSON());
+                }
+                console.log('Casino commands...')
+
+                const data2 = await rest.put(
+                    Routes.applicationGuildCommands(clientId, casinoguildId),
+                    { body: CasinoCommand },
+                );
+                console.log(`Successfully reloaded ${data2.length} application (/) commands.`);
+            }
 
         } catch (error) {
             // And of course, make sure you catch and log any errors!

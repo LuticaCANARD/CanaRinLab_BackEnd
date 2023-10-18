@@ -25,7 +25,7 @@ export default {
 		.select("CasinoChat.chatId")
 		.execute();
 
-		console.log('sended'+p.id)
+		//console.log('sended'+p.id)
 		if(read.length>0) await db.updateTable("CasinoChat").set({"chatId":p.id}).where("CasinoChat.id","=",p.guildId).execute();
 		else await db.insertInto("CasinoChat").values([{"id" : p.guildId,"chatId":p.id}]).execute();
 

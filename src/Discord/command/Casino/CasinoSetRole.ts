@@ -2,6 +2,7 @@ import { SlashCommandBuilder,GuildMemberRoleManager } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { administer_role_id } from '../../discordPref';
+import { checkAdmin } from '../../Admincheck';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -18,23 +19,7 @@ export default {
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		const argus = new Map()
 		interaction.options.data.map(a=>argus.set(a.name,a.value))
-		const administer = interaction.member?.roles;
-		const admin_id = administer_role_id;
-
-		if(administer instanceof GuildMemberRoleManager ) {
-			const j  = administer.cache.find(r=>r.id==admin_id)
-			if(!j){
-					await interaction.reply({ content: '관리자가 아닙니다. 이 명령은 관리자만 가능합니다.', ephemeral: true });
-					return;
-				}
-
-		}else{
-			const j = administer?.find(r=>r==admin_id)
-			if(!j){
-					await interaction.reply({ content: '관리자가 아닙니다. 이 명령은 관리자만 가능합니다.', ephemeral: true });
-					return;
-				}
-		}
+		if(await checkAdmin(interaction) == false) return ;
 		const v = argus.get("역할목록")?.replace(/, /g,',').replace(/ ,/g,',').split(',');
 		await db.deleteFrom("CasinoRoles").execute();
 		for(let n of v){

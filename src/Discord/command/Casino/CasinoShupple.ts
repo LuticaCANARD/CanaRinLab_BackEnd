@@ -2,6 +2,8 @@ import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
+import { checkAdmin } from '../../Admincheck';
+
 
 export default {
 	data: new SlashCommandBuilder()
@@ -18,6 +20,7 @@ export default {
 		)
 		,
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
+		if(await checkAdmin(interaction) == false) return ;
 		const read = await db.
 		selectFrom("CasinoChat")
 		.where("CasinoChat.id","=",interaction.guildId)

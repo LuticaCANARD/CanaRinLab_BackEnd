@@ -12,7 +12,7 @@ export default {
 		,
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		
-		let content = '<everyone> 이번주 카지노 참가자 확인합니다!'
+		let content = '<@everyone> 이번주 카지노 참가자 확인합니다!'
 		if(await checkAdmin(interaction) == false) return ;
 		if(interaction.options.data[0]?.value!=null) content = String(interaction.options.data[0].value)
 

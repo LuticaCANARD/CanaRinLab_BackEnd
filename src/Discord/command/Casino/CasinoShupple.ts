@@ -67,7 +67,7 @@ export default {
 		}
 
 		let counter = 1;
-		console.log(member_nicks)
+		//console.log(member_nicks)
 		for(let rl of roles_){
 
 			const rname = rl["RoleName"];

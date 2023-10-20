@@ -53,6 +53,8 @@ export const executeCommand = () =>{
             // const urls = killer.map(data => `${Routes.applicationGuildCommands(clientId, guildId)}/${data.id}`)
             // const v = urls.map( u=>rest.delete(u));
             //for(const p of v) await p;
+            //console.log(normal_coms)
+
             const data = await rest.put(
                 Routes.applicationGuildCommands(clientId, guildId),
                 { body: normal_coms },
@@ -69,7 +71,7 @@ export const executeCommand = () =>{
                     if(command.__esModule) CasinoCommand.push(command.default.data.toJSON())
                     else CasinoCommand.push(command.data.toJSON());
                 }
-                console.log('Casino commands...')
+                console.log('Casino commands...');
 
                 const data2 = await rest.put(
                     Routes.applicationGuildCommands(clientId, casinoguildId),

@@ -84,6 +84,7 @@ const commands = new Collection<string,any>()
 const commandsPath = path.join(__dirname, './Discord/command');
 const dirs = fs.readdirSync(commandsPath);
 for (const dir of dirs){
+	if(dir=='Utils') continue;
 	const now_path = path.join(commandsPath,'./'+dir);
 	const commandFiles = fs.readdirSync(now_path).filter(file => file.endsWith('.ts'));
 	for (const file of commandFiles) {

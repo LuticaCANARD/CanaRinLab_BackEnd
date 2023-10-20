@@ -2,7 +2,7 @@ import { SlashCommandBuilder,GuildMemberRoleManager } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { administer_role_id } from '../../discordPref';
-import { checkAdmin } from '../../Admincheck';
+import { checkAdmin } from '../../Utils/Admincheck';
 
 export default {
 	data: new SlashCommandBuilder()

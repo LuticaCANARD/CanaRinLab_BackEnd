@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
-import { checkAdmin } from '../../Admincheck';
+import { checkAdmin } from '../../Utils/Admincheck';
 
 
 export default {

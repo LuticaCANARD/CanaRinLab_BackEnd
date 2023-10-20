@@ -1,10 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js');
-var langutil = require('./util/lang_util/langutil.js');
+import langutil from '../util/lang_util/langutil.js';
 var ve  = require('./util/virture_env/virtureenv.js');
-var request = require('request');
+var request = require('request'); // CHANGER TO AXIOS.
+
+import { SlashCommandBuilder } from 'discord.js';
 
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('translate')
 		.setDescription('Translate message according to your setting.')

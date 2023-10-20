@@ -22,7 +22,7 @@ export default {
         const request_region = interaction.options.data[0]['value'];
         const position = weatherRegion[request_region];
         const res = await getWeather(position[0],position[1],60);
-        console.log(res['data']['response']['body']['items']['item'])
+        //console.log(res['data']['response']['body']['items']['item'])
 		await interaction.reply('Pong!');
 	}
 };

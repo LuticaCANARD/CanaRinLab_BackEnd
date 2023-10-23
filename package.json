@@ -5,6 +5,7 @@
     "@types/request": "^2.48.8",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
+    "@vitejs/plugin-react": "^4.1.0",
     "bun-types": "^1.0.2",
     "eslint": "^8.42.0",
     "eslint-config-node": "^4.1.0",
@@ -19,8 +20,10 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
+    "@bogeychan/elysia-oauth2": "^0.0.16",
     "@elysiajs/cookie": "^0.6.1",
     "@elysiajs/fn": "^0.5.2",
+    "@elysiajs/html": "^0.7.3",
     "@elysiajs/swagger": "^0.6.1",
     "@prisma/client": "latest",
     "@types/express-ws": "^3.0.1",
@@ -31,6 +34,8 @@
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "elysia": "^0.5.22",
+    "elysia-vite": "^0.2.0",
+    "elysia-vite-plugin-ssr": "^0.0.8",
     "i": "^0.3.7",
     "install": "^0.13.0",
     "kysely": "^0.25.0",
@@ -42,7 +47,7 @@
     "prisma-kysely": "^1.4.2",
     "request": "^2.88.2",
     "tweetnacl": "^1.0.3",
-    "vite": "^4.3.9",
+    "vite": "^4.5.0",
     "ws": "^8.13.0"
   },
   "scripts": {

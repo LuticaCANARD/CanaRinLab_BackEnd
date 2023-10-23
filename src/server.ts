@@ -2,6 +2,7 @@ import { createServer } from "http";
 import { WebSocket } from "ws";
 import { VrcRouter } from "./vrchat/vrc_controller"
 import { DiscordRouter } from "./Discord/discordbotindex";
+import {webRoute} from './web/web_controller'
 //import * as WebControl from "./web/web_controller"
 //import { PrismaClient } from '@prisma/client'
 import { Elysia,Context,ws } from 'elysia'
@@ -12,11 +13,12 @@ import { swagger } from '@elysiajs/swagger'
 import http from 'http';
 import path from 'node:path';
 import fs from 'fs';
+import {elysiaVitePluginSsr} from 'elysia-vite-plugin-ssr';
+import oauth2, { github,google } from '@bogeychan/elysia-oauth2'
+import { html } from '@elysiajs/html'
+import {elysiaVite} from 'elysia-vite'
 
 import { Collection,Client, GatewayIntentBits,SlashCommandBuilder,Events, REST, Routes, ChatInputCommandInteraction } from "discord.js";
-
-
-
 
 //const prisma = new PrismaClient()
 const PORT = Number(process.env.RIN_LAB_PORT) || 10000; 
@@ -35,14 +37,24 @@ else
 	tls.cert = readFileSync('./keys/dev_pub_.pem')
 	tls.key = readFileSync('./keys/dev_pri.pem')
 }
-
+const opt = {
+	base:'/web',
+	viteConfigFile: `${import.meta.dir}/src/vite.config.ts`, // absolute path to your vite config file
+	entryHtmlFile: `${import.meta.dir}/src/web/client/index.html`, // absolute path to your entry html file
+	entryClientFile: `${import.meta.dir}/src/web/client/index.tsx`, // absolute path to your entry script file
+	isReact: true, // inject React's specific HRM code @see https://vitejs.dev/guide/api-hmr.html
+	placeHolderDevScripts: '<!--vite-dev-scripts-->', // placeholder to replace vite scripts
+}
 const app = new Elysia()
+//.use(elysiaVite(opt))
 .use(swagger())
 .get('/',()=>{
 	return 'hi'}
 )
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
+.group('/api',webRoute)
+
 .listen({ 
 	port:process.env.RIN_LAB_PORT||443,   
 	hostname:process.env.HOSTNAME || '0.0.0.0',

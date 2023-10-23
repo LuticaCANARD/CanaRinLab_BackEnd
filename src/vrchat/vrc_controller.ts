@@ -73,6 +73,12 @@ const ImageVRC = (c:Context<any,any>) =>{
 	return {};
 }
 
+const VRCRailwayTable = (c:Context<any,any>) =>{
+
+	
+	return {};
+}
+
 export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> => {
 	app
 	.get('/',VrcGroup)
@@ -80,6 +86,7 @@ export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> 
 	.get('/weather',getWeatherCondiotion)
 	.get('/checker',getPlayerHeader)
 	.get("/Image",ImageVRC)
+	.get('/railway_table',VRCRailwayTable)
 
 	return app;
 } 

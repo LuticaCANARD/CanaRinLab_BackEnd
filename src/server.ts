@@ -13,10 +13,8 @@ import { swagger } from '@elysiajs/swagger'
 import http from 'http';
 import path from 'node:path';
 import fs from 'fs';
-import {elysiaVitePluginSsr} from 'elysia-vite-plugin-ssr';
 import oauth2, { github,google } from '@bogeychan/elysia-oauth2'
 import { html } from '@elysiajs/html'
-import {elysiaVite} from 'elysia-vite'
 
 import { Collection,Client, GatewayIntentBits,SlashCommandBuilder,Events, REST, Routes, ChatInputCommandInteraction } from "discord.js";
 

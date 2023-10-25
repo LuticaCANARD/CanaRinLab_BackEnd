@@ -22,7 +22,59 @@ export default {
         const request_region = interaction.options.data[0]['value'];
         const position = weatherRegion[request_region];
         const res = await getWeather(position[0],position[1],60);
-        //console.log(res['data']['response']['body']['items']['item'])
-		await interaction.reply('Pong!');
+        const p = res['data']['response']['body']['items']['item'];
+        const dataset = new Map();
+        const ks = []
+        p.forEach(e => {
+            let ctr = '';
+            if(dataset.get(+e.fcstTime))ctr = dataset.get(+e.fcstTime);
+            switch(e.category)
+            {
+                case'POP':{
+
+                }break;
+                case 'PTY':{
+
+                }break;
+                case 'PCP':{
+
+                }break;
+                case'REH':{
+                    
+                }break;
+                case'SNO':{
+                    
+                }break;
+                case'SKY':{
+                    
+                }break;
+                case'TMP':{
+                    
+                }break;
+                case'TMN':{
+                    
+                }break;
+                case'TMX':{
+                    
+                }break;
+                case'UUU':{
+                    
+                }break;
+                case'VVV':{
+                    
+                }break;
+                case'WAV':{
+                    
+                }break;
+                case'VEC':{
+                    
+                }break;
+                case'WSD':{
+                    
+                }break;
+
+            }
+        });
+        await interaction.reply('Pong!');
 	}
 };

@@ -10,6 +10,8 @@ import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'el
 import {getWeather} from '../common/weather'
 import { SHA256,CryptoHasher } from 'bun'
 import { randomInt } from 'node:crypto'
+import {getRailwayTimeTable} from '../common/railway_station'
+import {isKoreanHoliday} from '../Utils/get_holiday'
 
 export module VrcControl {
 	let db = Utils.DBpool
@@ -73,10 +75,11 @@ const ImageVRC = (c:Context<any,any>) =>{
 	return {};
 }
 
-const VRCRailwayTable = (c:Context<any,any>) =>{
-
-	
-	return {};
+const VRCRailwayTable = async (c:Context<any,any>) =>{
+	const loader = ["1277","K326","K327","K329","k330"];
+	const g = []
+	for(const k of loader) g.push((await getRailwayTimeTable('KR','K4',k,"normal")).data)
+	return g;
 }
 
 export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> => {

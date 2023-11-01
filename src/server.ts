@@ -27,8 +27,8 @@ if(!process.env.RIN_LAB_PORT)
 {
 	// 실서버에만 적용한다. localhost에 tls먹이기는 귀찮기때문.
 	// 하려면 발급해서 와도 되긴 하는데 
-	tls.cert = readFileSync('./keys/public.crt')
-	tls.key = readFileSync('./keys/private.key')
+	tls.cert = readFileSync(process.env["SSL_PUBLIC"])
+	tls.key = readFileSync(process.env["SSL_PRIVATE"])
 }
 else
 {

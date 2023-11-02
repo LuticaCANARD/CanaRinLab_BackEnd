@@ -7,17 +7,21 @@ import {getWeather} from '../common/weather'
 import { SHA256,CryptoHasher } from 'bun'
 import { randomInt } from 'node:crypto'
 import * as Utils from '../Utils/utils'
-import {saveRequest} from '../model/web'
+import {saveRequest,loadAnswer} from '../model/web'
 
 const saveProjectAnswer =async (c:Context<any,any>)=>{
 	await saveRequest(c.body["user"],c.body["user_contact"],c.body["desc"])
 	return {res:true}
 };
-
+const readProjectAnswer =async (c:Context<any,any>)=>{
+	const ret = await loadAnswer(c.body["id"])
+	return ret;
+};
 
 export const webRoute = (app:Elysia <any>) : Elysia<any> => {
 	app
 	.post('/resume_contact',saveProjectAnswer)
+	.get('/read_contact',readProjectAnswer)
 	return app;
 } 
 

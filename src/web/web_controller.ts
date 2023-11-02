@@ -25,6 +25,8 @@ const tokenMidprojGuard = async(c:Context)=>{
 	if(c.body['token']??'' != process.env["MIDP_TOKEN"]) {
 		c.set.status=403;
 		return {"ret" : "invalid token !"}}
+	console.log('ss')
+
 }
 
 export const webRoute = (app:Elysia) : Elysia => {

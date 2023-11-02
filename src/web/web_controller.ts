@@ -31,7 +31,7 @@ export const webRoute = (app:Elysia) : Elysia => {
 		beforeHandle: tokenMidprojGuard
 	}, app=>app
 		.post('/resume_contact',saveProjectAnswer)
-		.get('/read_contact',readProjectAnswer)
+		.post('/read_contact',readProjectAnswer)
 	)
 	return app;
 } 

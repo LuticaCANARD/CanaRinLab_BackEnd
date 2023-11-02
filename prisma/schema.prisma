@@ -94,3 +94,11 @@ model CasinoChat{
   chatId String
   
 }
+//------------------과제용 임시
+model ProjectAnswer{
+  id    Int     @id @default(autoincrement())
+  createAt DateTime @default(now())
+  name String
+  contact String
+  desc String
+}

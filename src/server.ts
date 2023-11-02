@@ -5,7 +5,7 @@ import { DiscordRouter } from "./Discord/discordbotindex";
 import {webRoute} from './web/web_controller'
 //import * as WebControl from "./web/web_controller"
 //import { PrismaClient } from '@prisma/client'
-import { Elysia,Context,ws } from 'elysia'
+import { Elysia,Context,t } from 'elysia'
 import {readFileSync} from 'fs';
 import { buffer } from "stream/consumers";
 import {discordWsRouter} from './Discord/ws/wsRouter'
@@ -15,6 +15,9 @@ import path from 'node:path';
 import fs from 'fs';
 import oauth2, { github,google } from '@bogeychan/elysia-oauth2'
 import { html } from '@elysiajs/html'
+import cors from '@elysiajs/cors'
+
+type CORSOriginFn = (context: Context) => boolean | void
 
 import { Collection,Client, GatewayIntentBits,SlashCommandBuilder,Events, REST, Routes, ChatInputCommandInteraction } from "discord.js";
 
@@ -44,15 +47,20 @@ const opt = {
 	placeHolderDevScripts: '<!--vite-dev-scripts-->', // placeholder to replace vite scripts
 }
 const app = new Elysia()
+
 //.use(elysiaVite(opt))
-.use(swagger())
-.get('/',()=>{
+.use(cors({
+	origin: /\*/
+}))
+
+
+.get('/',(c:Context<any,any>)=>{
+	console.log('sss')
 	return 'hi'}
 )
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .group('/api',webRoute)
-
 .listen({ 
 	port:process.env.RIN_LAB_PORT||443,   
 	hostname:process.env.HOSTNAME || '0.0.0.0',
@@ -61,7 +69,6 @@ const app = new Elysia()
 )
 
 const ws_server = new Elysia()
-.use(ws())
 .ws('/ws/discord',discordWsRouter)
 .ws('/ws/check',{
 	open(ws) {
@@ -69,6 +76,7 @@ const ws_server = new Elysia()
 		ws.close();
 	},
 })
+
 .listen(
 	{
 		port:process.env.WS_PORT||9999,
@@ -76,6 +84,7 @@ const ws_server = new Elysia()
 		tls
 	}
 );
+
 
 
 

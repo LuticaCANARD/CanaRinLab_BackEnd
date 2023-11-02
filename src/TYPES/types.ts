@@ -30,6 +30,14 @@ export type DateWeek = {
 export type DiscordServer = {
   GuildId: string;
 };
+export type ProjectAnswer = {
+  id: Generated<number>;
+  createAt: Generated<Timestamp>;
+  code: number;
+  name: string;
+  contact: string;
+  desc: string;
+};
 export type RailStnStat = {
   DateId: number;
   EXTR_STN_CD: number;
@@ -61,6 +69,7 @@ export type DB = {
   CasinoRoles: CasinoRoles;
   DateWeek: DateWeek;
   DiscordServer: DiscordServer;
+  ProjectAnswer: ProjectAnswer;
   RailStnStat: RailStnStat;
   ServerPref: ServerPref;
   StnName: StnName;

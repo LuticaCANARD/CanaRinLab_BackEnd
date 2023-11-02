@@ -6,7 +6,7 @@
 import * as RinLib from './libproj/canarinlib' // Cana rin Lib project
 import * as RinWet from './weatherproj/canarinwet'
 import * as Utils from '../Utils/utils' // Formally.
-import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
+import {Context,Handler,Elysia} from 'elysia' // Elysia
 import {getWeather} from '../common/weather'
 import { SHA256,CryptoHasher } from 'bun'
 import { randomInt } from 'node:crypto'
@@ -16,7 +16,7 @@ import {isKoreanHoliday} from '../Utils/get_holiday'
 export module VrcControl {
 	let db = Utils.DBpool
 	//
-	export const checkVrcInfo = (context:LocalHandler<TypedSchema<never>, ElysiaInstance, "/vrchat">) => {
+	export const checkVrcInfo = (context:Context) => {
 
 	}
 
@@ -82,7 +82,7 @@ const VRCRailwayTable = async (c:Context<any,any>) =>{
 	return g;
 }
 
-export const VrcRouter = (app:Elysia <ElysiaInstance>) : Elysia<ElysiaInstance> => {
+export const VrcRouter = (app:Elysia) : Elysia => {
 	app
 	.get('/',VrcGroup)
 	.get('/SolidTable',SolidTable)

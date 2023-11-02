@@ -11,6 +11,7 @@ import {saveRequest} from '../model/web'
 
 const saveProjectAnswer =async (c:Context<any,any>)=>{
 	await saveRequest(c.body["user"],c.body["user_contact"],c.body["desc"])
+	console.log('ss')
 	return {res:true}
 };
 

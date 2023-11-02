@@ -33,7 +33,6 @@ export type DiscordServer = {
 export type ProjectAnswer = {
   id: Generated<number>;
   createAt: Generated<Timestamp>;
-  code: number;
   name: string;
   contact: string;
   desc: string;

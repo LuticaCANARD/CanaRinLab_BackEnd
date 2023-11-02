@@ -16,6 +16,8 @@ import fs from 'fs';
 import oauth2, { github,google } from '@bogeychan/elysia-oauth2'
 import { html } from '@elysiajs/html'
 import cors from '@elysiajs/cors'
+import { cron } from '@elysiajs/cron'
+import{heartbeat} from './dbchecker'
 
 type CORSOriginFn = (context: Context) => boolean | void
 
@@ -55,9 +57,15 @@ const app = new Elysia()
 
 
 .get('/',(c:Context<any,any>)=>{
-	console.log('sss')
 	return 'hi'}
 )
+.use(cron({
+	name:'DB CHECK',
+	pattern:'0 0 12 * 2,6 *',
+	run:async()=>{
+		await heartbeat();
+	}
+}))
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .group('/api',webRoute)

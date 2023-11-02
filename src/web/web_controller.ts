@@ -20,6 +20,8 @@ const readProjectAnswer =async (c:Context)=>{
 	return ret;
 };
 const tokenMidprojGuard = async(c:Context)=>{
+	console.log('ss')
+
 	if(c.body['token']??'' != process.env["MIDP_TOKEN"]) {
 		c.set.status=403;
 		return {"ret" : "invalid token !"}}

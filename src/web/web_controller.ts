@@ -10,9 +10,7 @@ import * as Utils from '../Utils/utils'
 import {saveRequest,loadAnswer} from '../model/web'
 
 const saveProjectAnswer =async (c:Context)=>{
-	console.log('ss')
 	const id = await saveRequest(c.body["user"],c.body["user_contact"],c.body["desc"])
-	console.log('ss')
 	return {res:true,id:id[0].id}
 };
 const readProjectAnswer =async (c:Context)=>{

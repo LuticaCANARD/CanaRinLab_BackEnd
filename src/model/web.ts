@@ -5,5 +5,5 @@ export const saveRequest =async (username:string,user_contact:string,desc:string
 }
 
 export const loadAnswer =async (id:Array<number>) => {
-    return db.selectFrom("ProjectAnswer").select(["ProjectAnswer.desc","ProjectAnswer.name"]).where("ProjectAnswer.id","in",id).execute();
+    return db.selectFrom("ProjectAnswer").select(["ProjectAnswer.desc","ProjectAnswer.name","ProjectAnswer.contact","ProjectAnswer.createAt"]).where("ProjectAnswer.id","in",id).execute();
 }

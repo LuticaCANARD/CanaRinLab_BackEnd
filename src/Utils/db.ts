@@ -18,4 +18,4 @@ export const DBRaw = createPool({
 	password: process.env['DB_PW'],
 	port: Number(process.env['DB_PORT'])
 })
-export const db_temp = createPool(process.env["DB_WEB_STUDY"]);
+export const db_temp = process.env["DB_WEB_STUDY"]?createPool(process.env["DB_WEB_STUDY"]):'';

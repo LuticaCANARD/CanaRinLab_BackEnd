@@ -6,7 +6,7 @@ export const getWeather = async (nx:BigInt|Number,ny:BigInt|Number,row:BigInt|Nu
 	let setdaet = moment().format('YYYYMMDD');
 	let date = new Date();
 	let date_change = false;
-	if(date.getUTCHours()+9>24&&date.getUTCHours()+9<31) 
+	if(date.getUTCHours()+9>=24&&date.getUTCHours()+9<=31) 
 	{
 		setdaet = moment().subtract(1, 'day').format('YYYYMMDD');
 		date_change = true;
@@ -20,7 +20,6 @@ export const getWeather = async (nx:BigInt|Number,ny:BigInt|Number,row:BigInt|Nu
 	queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent(String(nx)); 
 	queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent(String(ny));
 	const weather = await axios.get('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'+queryParams)
-	
 	/**
 	* POP	강수확률	%	8
 	PTY	강수형태	코드값	4
@@ -78,8 +77,16 @@ export const getWeather = async (nx:BigInt|Number,ny:BigInt|Number,row:BigInt|Nu
 		else 
 		ret[f.fcstDate][f.fcstTime][f.category] = f.fcstValue;
 	})
-		
-	return ret;
+	const keys = Object.keys(ret).sort();
+	const ret_ = {};
+	keys.forEach(p=>{
+		const time = Object.keys(ret[p]);		
+		const time_ = {}
+		const st = time.sort();
+		st.forEach(t=>time_[Number(t)] = ret[p][t]);
+		ret_[p] = time_;
+	});
+	return ret_;
 	
 	// https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
 	// getUltraSrtNcst/key/...

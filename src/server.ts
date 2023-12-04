@@ -59,13 +59,15 @@ const app = new Elysia()
 .get('/',(c:Context<any,any>)=>{
 	return 'hi'}
 )
-.use(cron({
-	name:'DB CHECK',
-	pattern:'0 0 0 * * *',
-	run:async()=>{
-		await heartbeat();
-	}
-}))
+.use(
+	cron({
+		name:'DB CHECK',
+		pattern:'0 18 * * * *',
+		run:async()=>{
+			await heartbeat();
+		}
+	})
+)
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)
 .group('/api',webRoute)

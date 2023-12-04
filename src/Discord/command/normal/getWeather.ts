@@ -25,7 +25,19 @@ export default {
         const p = Object.keys(res);
         const dataset = new Map();
         const ks = []
+        let c = '';
         p.forEach(e => {
+            const day = res[e];
+            c += "## "+request_region+" 의 "+e+' 의 날씨 ---\n```'
+            const times = Object.keys(day);
+            times.forEach(t=>{
+                c +=String(t).padStart(4,'0')+' : \n'
+                const info = Object.keys(day[t]);
+                info.forEach(k=>{
+                    c += '\t'+k+' : '+day[t][k]+'\n';
+                })
+            })
+            c += '```'
             /**
              * "20231204": {
     "1000": {
@@ -44,6 +56,6 @@ export default {
     },
              */
         });
-        await interaction.reply('Pong!');
+        await interaction.reply(c);
 	}
 };

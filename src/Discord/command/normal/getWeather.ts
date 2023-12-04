@@ -22,58 +22,27 @@ export default {
         const request_region = interaction.options.data[0]['value'];
         const position = weatherRegion[request_region];
         const res = await getWeather(position[0],position[1],60);
-        const p = res['data']['response']['body']['items']['item'];
+        const p = Object.keys(res);
         const dataset = new Map();
         const ks = []
         p.forEach(e => {
-            let ctr = '';
-            if(dataset.get(+e.fcstTime))ctr = dataset.get(+e.fcstTime);
-            switch(e.category)
-            {
-                case'POP':{
-
-                }break;
-                case 'PTY':{
-
-                }break;
-                case 'PCP':{
-
-                }break;
-                case'REH':{
-                    
-                }break;
-                case'SNO':{
-                    
-                }break;
-                case'SKY':{
-                    
-                }break;
-                case'TMP':{
-                    
-                }break;
-                case'TMN':{
-                    
-                }break;
-                case'TMX':{
-                    
-                }break;
-                case'UUU':{
-                    
-                }break;
-                case'VVV':{
-                    
-                }break;
-                case'WAV':{
-                    
-                }break;
-                case'VEC':{
-                    
-                }break;
-                case'WSD':{
-                    
-                }break;
-
-            }
+            /**
+             * "20231204": {
+    "1000": {
+      TMP: "4",
+      UUU: "-0.6",
+      VVV: "-0.1",
+      VEC: "82",
+      WSD: "0.7",
+      SKY: "맑음",
+      PTY: "없음",
+      POP: "0",
+      WAV: "0",
+      PCP: "강수없음",
+      REH: "70",
+      SNO: "적설없음"
+    },
+             */
         });
         await interaction.reply('Pong!');
 	}

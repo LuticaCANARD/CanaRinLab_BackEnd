@@ -1,5 +1,5 @@
 import * as Utils from '../Utils/utils' // Formally.
-import {LocalHandler,ElysiaInstance,TypedSchema,Context,Handler,Elysia} from 'elysia' // Elysia
+import {Context,Handler,Elysia} from 'elysia' // Elysia
 import { swagger } from '@elysiajs/swagger'
 import nacl from 'tweetnacl'
 
@@ -78,7 +78,7 @@ const discordInit = async (c:Context<any>) =>{
 
 
 
-export const DiscordRouter = (app:Elysia <ElysiaInstance>) :Elysia<ElysiaInstance> => {
+export const DiscordRouter = (app:Elysia): Elysia => {
 	app
 	.post('/',discordInit)
 

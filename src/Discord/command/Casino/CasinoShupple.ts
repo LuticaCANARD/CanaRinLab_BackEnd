@@ -50,7 +50,6 @@ export default {
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
 			
 		const member_nicks = await db.selectFrom("CasinoMember").where("CasinoMember.userId","in",memberids).select(["CasinoMember.name","CasinoMember.userId"]).execute();
-		member_nicks.sort(() => Math.random()-0.5) // 섞음
 
 		let str_val = '오늘의 카지노 \n'
 		
@@ -66,25 +65,32 @@ export default {
 			}
 		}
 
-		let counter = 1;
-		//console.log(member_nicks)
-		for(let rl of roles_){
+		const before = new Map();
+		for(let now=1;now<=2;now++){
+			str_val+= `\`\`\`---------${now}부--------\n`
 
-			const rname = rl["RoleName"];
-			const res_member = role_addt.get(rname);
-			if(res_member) str_val += `${rname} : <@${res_member}>\n`
-			else if(rl["userId"]&&joinner.get(rl["userId"])){
-				str_val += `${rname} : <@${rl["userId"]}>\n`
+			let counter = 1;
+			member_nicks.sort(() => Math.random()-0.5) // 섞음
+	
+			//console.log(member_nicks)
+			for(let rl of roles_){
+	
+				const rname = rl["RoleName"];
+				const res_member = role_addt.get(rname);
+				if(res_member) str_val += `${rname} : <@${res_member}>\n`
+				else if(rl["userId"]&&joinner.get(rl["userId"])){
+					str_val += `${rname} : <@${rl["userId"]}>\n`
+				} else {
+					
+					str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
+					counter ++ ;
+				}
+				if(counter > member_nicks.length) break;
+	
 			}
-			else {
-				str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
-				counter ++ ;
-			}
-			if(counter > member_nicks.length) break;
-
+			str_val+='```';
 		}
 
-		str_val+= ''
 
 
 		await interaction.reply({content:str_val})

@@ -33,8 +33,8 @@ const SolidTable = (c:Context<any,any>)=>{
 const getWeatherCondiotion = async (c:Context<any,any>) =>{
 	const x = BigInt(Number(c.query["x"])),y = BigInt(Number(c.query["y"]));
 	const weather = await getWeather(x,y,BigInt(1000))
-	console.log(weather["data"]["response"]["header"])
-	return weather["data"]["response"]["body"];
+//	console.log(weather["data"]["response"]["header"])
+	return weather;
 }
 const getPlayerHeader =  (c:Context<any,any>) =>{
 	const v = c.headers;

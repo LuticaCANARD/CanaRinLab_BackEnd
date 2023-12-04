@@ -61,7 +61,7 @@ const app = new Elysia()
 )
 .use(cron({
 	name:'DB CHECK',
-	pattern:'0 0 12 * 2,6 *',
+	pattern:'0 0 12 * * *',
 	run:async()=>{
 		await heartbeat();
 	}

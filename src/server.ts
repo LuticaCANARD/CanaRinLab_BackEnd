@@ -61,11 +61,11 @@ const app = new Elysia()
 )
 .use(cron({
 	name:'DB CHECK',
-	pattern:'0 0 0 * * *',
+	pattern:'0 0 * * * *',
 	run:async()=>{
 		await heartbeat();
 	}
-	
+
 }))
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)

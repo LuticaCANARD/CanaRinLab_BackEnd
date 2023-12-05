@@ -65,6 +65,7 @@ const app = new Elysia()
 	run:async()=>{
 		await heartbeat();
 	}
+	
 }))
 .group('/vrchat',VrcRouter)
 .group('/discord',DiscordRouter)

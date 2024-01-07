@@ -3,7 +3,8 @@ import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
 import { checkAdmin } from '../../Utils/Admincheck';
-
+import { GetCasinoChatters,GetCasinoRole,GetMemberName } from '../../../model/CasinoMembers';
+import { GetSetting } from '../../../model/setting';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -21,11 +22,7 @@ export default {
 		,
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		if(await checkAdmin(interaction) == false) return ;
-		const read = await db.
-		selectFrom("CasinoChat")
-		.where("CasinoChat.id","=",interaction.guildId)
-		.select("CasinoChat.chatId")
-		.execute();
+		const read = await GetCasinoChatters(interaction.guildId);
 		const f = await interaction.channel?.messages.fetch(read[0]["chatId"]);
 		const reacts = f?.reactions.cache.get('✅');
 		const g = await reacts?.users.fetch({});
@@ -42,19 +39,15 @@ export default {
 		const sttr = argus?.get("역할지정")?.replace(/, /g,',').replace(/ ,/g,',').split(',')
 		const role_addt = new Map()
 
-		const casino_min_ = await db.selectFrom("ServerPref").select("value").where("ServerPref.prefKey","=","casino_min").execute();
+		const casino_min_ = await GetSetting("casino_min");
 		const casino_min = Number(casino_min_[0].value)
 		if (!memberids
 			||memberids.length<casino_min
 			) 
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
 			
-		const member_nicks = await db.selectFrom("CasinoMember").where("CasinoMember.userId","in",memberids).select(["CasinoMember.name","CasinoMember.userId"]).execute();
-
-		let str_val = '오늘의 카지노 \n'
-		
-		str_val +=''
-		const roles_ = await db.selectFrom("CasinoRoles").select(["CasinoRoles.RoleName","CasinoRoles.userId","CasinoRoles.Priority"]).orderBy("CasinoRoles.Priority").execute();
+		const member_nicks = await GetMemberName(memberids);
+		const roles_ = await GetCasinoRole();
 		if(sttr){
 			for(let v of sttr ){
 				const arrs = v.split(':')
@@ -66,32 +59,8 @@ export default {
 		}
 
 		const before = new Map();
-		for(let now=1;now<=2;now++){
-			str_val+= `\`\`\`---------${now}부--------\n`
-
-			let counter = 1;
-			member_nicks.sort(() => Math.random()-0.5) // 섞음
-	
-			//console.log(member_nicks)
-			for(let rl of roles_){
-	
-				const rname = rl["RoleName"];
-				const res_member = role_addt.get(rname);
-				if(res_member) str_val += `${rname} : <@${res_member}>\n`
-				else if(rl["userId"]&&joinner.get(rl["userId"])){
-					str_val += `${rname} : <@${rl["userId"]}>\n`
-				} else {
-					
-					str_val += `${rname} : <@${member_nicks[counter-1]["userId"]}>\n`
-					counter ++ ;
-				}
-				if(counter > member_nicks.length) break;
-	
-			}
-			str_val+='```';
-		}
-
-
+		let get_firsted = false;
+		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_);
 
 		await interaction.reply({content:str_val})
 
@@ -99,3 +68,66 @@ export default {
 	}
 	
 }; 
+
+export const SuppleMember = (role_addt,joinner,member_nicks,roles_)=>{
+	const deploy_result:Array<Map<string,string>> = [];
+	for(let now=1;now<=2;now++)
+	{
+		const now_deploy:Map<string,string> = new Map(); 
+		let counter = 1;
+		member_nicks.sort(() => Math.random()-0.5) // 섞음
+
+		//console.log(member_nicks)
+		for(let rl of roles_){
+			const rname = rl["RoleName"];
+			const res_member = role_addt.get(rname);
+			if(res_member) {
+				now_deploy.set(rname,res_member);
+			}
+			else if(rl["userId"] && joinner.get(rl["userId"])){
+				now_deploy.set(rname,rl["userId"]);
+			} else {
+				now_deploy.set(rname,member_nicks[counter-1]["userId"]);
+				counter ++ ;
+			}
+			if(counter > member_nicks.length) break;
+		}
+		deploy_result.push(now_deploy);
+	}
+	let str_val : string = "오늘의 역할 \n";
+	for(let i=0;i<deploy_result.length;i++)
+	{
+		str_val += `${i+1} 부 \n`
+		const now_checking_roles = deploy_result[i];
+		if(i==1){ // 후반부일때... 전반부와 동일한 역할이 있는지 검사.
+			const before_ = deploy_result[0];
+			const key_arr_before = Array.from(before_.keys());
+			const length_ = key_arr_before.length;
+			key_arr_before.forEach(key=>{
+				if(before_.get(key) == now_checking_roles.get(key)) 
+				{
+					console.log()
+					let selected_key = key_arr_before[Math.floor(Math.random()*length_)];
+					while(selected_key == key || before_.get(selected_key) == now_checking_roles.get(key)){
+						selected_key = key_arr_before[Math.floor(Math.random()*length_)];
+					}
+					let temp_member = now_checking_roles.get(selected_key);
+					now_checking_roles.set(selected_key,now_checking_roles.get(key));
+					now_checking_roles.set(key,temp_member);
+				}
+			})
+			
+		}
+
+		const keys = Array.from(now_checking_roles.keys());
+		
+		str_val += `\`\`\`\n`
+		keys.forEach(key=>{
+			str_val += `${key} : ${now_checking_roles.get(key)}\n`
+		})
+		str_val += '```\n';
+	}
+
+	return str_val;
+
+}

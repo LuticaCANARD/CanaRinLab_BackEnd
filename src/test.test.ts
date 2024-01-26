@@ -61,7 +61,11 @@ test("멤버 셔플링",()=>{
     memberList.forEach(element => {
         joinner.set(element,true);
     });
+    const name = new Map();
+    memberList.forEach(c=>{
+        name.set(c.userId,c.name);
+    })
     console.log('--')
-    console.log(SuppleMember(new Map(),joinner,memberList,role_))
+    console.log(SuppleMember(new Map(),joinner,memberList,role_,name))
 })
 

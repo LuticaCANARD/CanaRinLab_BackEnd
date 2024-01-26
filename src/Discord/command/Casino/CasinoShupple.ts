@@ -47,6 +47,10 @@ export default {
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
 			
 		const member_nicks = await GetMemberName(memberids);
+		const names = new Map();
+		member_nicks.forEach(c=>{
+			names.set(c.userId,c.name);
+		})
 		const roles_ = await GetCasinoRole();
 		if(sttr){
 			for(let v of sttr ){
@@ -60,7 +64,7 @@ export default {
 
 		const before = new Map();
 		let get_firsted = false;
-		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_);
+		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_,names);
 
 		await interaction.reply({content:str_val})
 
@@ -69,7 +73,7 @@ export default {
 	
 }; 
 
-export const SuppleMember = (role_addt,joinner,member_nicks,roles_)=>{
+export const SuppleMember = (role_addt,joinner,member_nicks,roles_,names)=>{
 	const deploy_result:Array<Map<string,string>> = [];
 	for(let now=1;now<=2;now++)
 	{
@@ -123,7 +127,7 @@ export const SuppleMember = (role_addt,joinner,member_nicks,roles_)=>{
 		
 		str_val += `\`\`\`\n`
 		keys.forEach(key=>{
-			str_val += `${key} : ${now_checking_roles.get(key)}\n`
+			str_val += `${key} : ${names.get(now_checking_roles.get(key))}\n`
 		})
 		str_val += '```\n';
 	}

@@ -32,7 +32,7 @@ export default {
 			joinner.set(j.id,true)		
 			return j.id;
 		})
-		
+
 
 		const argus = new Map()
 		interaction.options.data.map(a=>argus.set(a.name,a.value))
@@ -48,7 +48,10 @@ export default {
 		const member_infos = await GetMemberName(memberids);
 		const member_normal = member_infos.filter(m=>m.intern!==1)
 		const member_intern = member_infos.filter(m=>m.intern===1)
-
+		const names = new Map();
+		member_infos.forEach(c=>{
+			names.set(c.userId,c.name);
+		})
 		const roles_ = await GetCasinoRole();
 		if(sttr){
 			for(let v of sttr ){
@@ -63,8 +66,21 @@ export default {
 
 		const before = new Map();
 		let str_val = '오늘의 카지노 \n' + SuppleMember(role_addt,joinner,member_normal,roles_)+'\n';
+
 		if(member_intern.length > 0){
-			str_val += '인턴----\n' + await SetInternSuppleMember(role_addt,joinner,member_intern,roles_);
+			const deploymap_intern = await SetInternSuppleMember(role_addt,joinner,member_intern,roles_);
+
+			str_val += '인턴----\n';
+			let v  = ''
+
+			for(let phase = 0; phase <deploymap_intern.length; phase ++){
+				v += `${phase+1} 부 인턴 \n \`\`\``;
+				for(const role of Array.from(deploymap_intern[phase].keys())){
+					v += `${role} : ${names.get(deploymap_intern[phase].get(role))}\n`;
+				}
+				v += '```\n'
+			}
+
 		}
 		await interaction.reply({content:str_val})
 
@@ -153,9 +169,8 @@ export const SetInternSuppleMember = async (role_addt:Map<any, any>,joinner:Map<
     name: string;
     userId: string;
     intern: number;
-}[],roles_: { userId: string; Priority: number; RoleName: string; }[],debug=false) =>{
-	let ret = '\n';
-	const names = new Map();
+}[],roles_: { userId: string; Priority: number; RoleName: string; }[],debug=false) => {
+	const ret:Map<string,any>[] = [];
 	const history_ = await GetCasinoInternHistory(Array.from(joinner.keys()));
 	const internPair:Map<string,Array<string>> = new Map();
 	for( const h of history_){
@@ -167,8 +182,8 @@ export const SetInternSuppleMember = async (role_addt:Map<any, any>,joinner:Map<
 	}
 
 	for(let now=0;now<2;now++){
+		const deploy = new Map();
 		const nowPlayingRole:Map<string,string> = new Map()
-		ret += `${now+1} 부\n \`\`\``
 		for( const member of interns )
 		{
 			// TODO : 역할지정등.
@@ -181,10 +196,11 @@ export const SetInternSuppleMember = async (role_addt:Map<any, any>,joinner:Map<
 			const s = motherArray[0].RoleName;
 			nowPlayingRole.set(s,member.userId);
 			playedHistory.push(s);
-			ret += `${s} : ${member.name}+\n`
+			deploy.set(s,member.userId);
 		}
 
-		ret += '\n ``` \n'
+		ret.push(deploy);
 
 	}
+	return ret;
 }

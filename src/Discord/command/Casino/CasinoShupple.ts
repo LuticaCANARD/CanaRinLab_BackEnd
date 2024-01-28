@@ -61,7 +61,7 @@ export default {
 
 		const before = new Map();
 		let get_firsted = false;
-		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_);
+		let str_val = '오늘의 카지노 \n' + SuppleMember(role_addt,joinner,member_nicks,roles_);
 
 		await interaction.reply({content:str_val})
 

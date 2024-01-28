@@ -13,7 +13,10 @@ export default {
 	async execute(interaction:ChatInputCommandInteraction<CacheType>){
 		
 		let content = '<@everyone> 이번주 카지노 참가자 확인합니다!'
-		if(await checkAdmin(interaction) == false) return ;
+		if(await checkAdmin(interaction) === false) {
+			
+			return
+		} ;
 		if(interaction.options.data[0]?.value!=null) content = String(interaction.options.data[0].value)
 
 		const p = await interaction.reply({ content , fetchReply: true })

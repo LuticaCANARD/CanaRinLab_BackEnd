@@ -45,12 +45,8 @@ export default {
 			||memberids.length<casino_min
 			) 
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
-			
 		const member_nicks = await GetMemberName(memberids);
-		const names = new Map();
-		member_nicks.forEach(c=>{
-			names.set(c.userId,c.name);
-		})
+
 		const roles_ = await GetCasinoRole();
 		if(sttr){
 			for(let v of sttr ){
@@ -61,10 +57,11 @@ export default {
 				role_addt.set(role,pz);
 			}
 		}
+		// TODO : 인턴은 따로돌린다.
 
 		const before = new Map();
 		let get_firsted = false;
-		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_,names);
+		let str_val = '오늘의 카지노 \n' +SuppleMember(role_addt,joinner,member_nicks,roles_);
 
 		await interaction.reply({content:str_val})
 
@@ -73,8 +70,12 @@ export default {
 	
 }; 
 
-export const SuppleMember = (role_addt,joinner,member_nicks,roles_,names)=>{
+export const SuppleMember = (role_addt,joinner,member_nicks,roles_,debug=false)=>{
 	const deploy_result:Array<Map<string,string>> = [];
+	const names = new Map();
+	member_nicks.forEach(c=>{
+		names.set(c.userId,c.name);
+	})
 	for(let now=1;now<=2;now++)
 	{
 		const now_deploy:Map<string,string> = new Map(); 
@@ -98,6 +99,7 @@ export const SuppleMember = (role_addt,joinner,member_nicks,roles_,names)=>{
 		}
 		deploy_result.push(now_deploy);
 	}
+	const debugArray = [];
 	let str_val : string = "오늘의 역할 \n";
 	for(let i=0;i<deploy_result.length;i++)
 	{
@@ -110,7 +112,6 @@ export const SuppleMember = (role_addt,joinner,member_nicks,roles_,names)=>{
 			key_arr_before.forEach(key=>{
 				if(before_.get(key) == now_checking_roles.get(key)) 
 				{
-					console.log()
 					let selected_key = key_arr_before[Math.floor(Math.random()*length_)];
 					while(selected_key == key || before_.get(selected_key) == now_checking_roles.get(key)){
 						selected_key = key_arr_before[Math.floor(Math.random()*length_)];
@@ -129,9 +130,19 @@ export const SuppleMember = (role_addt,joinner,member_nicks,roles_,names)=>{
 		keys.forEach(key=>{
 			str_val += `${key} : ${names.get(now_checking_roles.get(key))}\n`
 		})
+		debugArray.push(now_checking_roles);
 		str_val += '```\n';
-	}
 
+	}
+	if(debug){
+		for(const key of Array.from(debugArray[0].keys())){
+			if(debugArray[0].get(key) == debugArray[1].get(key)) {
+				console.log('!!!!\n')
+				return true;
+			}
+		}
+		return false;
+	}
 	return str_val;
 
 }

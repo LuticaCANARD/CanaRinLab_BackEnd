@@ -24,7 +24,7 @@ export default {
 		.addStringOption(option=>option
 			.setName("이름")
 			.setDescription("멤버의 별명")
-			.setRequired(false)
+			.setRequired(true)
 			)
 		.addBooleanOption(opt=>opt
 			.setName("탈퇴")

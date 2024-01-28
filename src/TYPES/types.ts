@@ -10,6 +10,10 @@ export type CasinoEvent = {
   time: Timestamp;
   userId: string;
 };
+export type CasinoInternHistory = {
+  userId: string;
+  RoleName: string;
+};
 export type CasinoMember = {
   name: string | null;
   userId: string;
@@ -29,13 +33,6 @@ export type DateWeek = {
 };
 export type DiscordServer = {
   GuildId: string;
-};
-export type ProjectAnswer = {
-  id: Generated<number>;
-  createAt: Generated<Timestamp>;
-  name: string;
-  contact: string;
-  desc: string;
 };
 export type RailStnStat = {
   DateId: number;
@@ -64,11 +61,11 @@ export type VoteExecutor = {
 export type DB = {
   CasinoChat: CasinoChat;
   CasinoEvent: CasinoEvent;
+  CasinoInternHistory: CasinoInternHistory;
   CasinoMember: CasinoMember;
   CasinoRoles: CasinoRoles;
   DateWeek: DateWeek;
   DiscordServer: DiscordServer;
-  ProjectAnswer: ProjectAnswer;
   RailStnStat: RailStnStat;
   ServerPref: ServerPref;
   StnName: StnName;

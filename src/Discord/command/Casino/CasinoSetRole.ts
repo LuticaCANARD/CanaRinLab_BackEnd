@@ -12,7 +12,6 @@ export default {
 			option.setName('역할목록')
 				.setDescription('역할목록 쉼표로구분 (역할1,역할2,...)')
 				.setRequired(true)
-
 		)
 			
 		,

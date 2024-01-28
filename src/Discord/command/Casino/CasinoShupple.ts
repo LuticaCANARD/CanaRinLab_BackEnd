@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction , CacheType } from 'discord.js';
 import { db } from '../../../Utils/db';
 import { ReturningNode } from 'kysely';
 import { checkAdmin } from '../../Utils/Admincheck';
-import { GetCasinoChatters,GetCasinoRole,GetMemberName } from '../../../model/CasinoMembers';
+import { GetCasinoChatters,GetCasinoInternHistory,GetCasinoRole,GetMemberName } from '../../../model/CasinoMembers';
 import { GetSetting } from '../../../model/setting';
 
 export default {
@@ -45,7 +45,9 @@ export default {
 			||memberids.length<casino_min
 			) 
 			{await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)'}); return;}
-		const member_nicks = await GetMemberName(memberids);
+		const member_infos = await GetMemberName(memberids);
+		const member_normal = member_infos.filter(m=>m.intern!==1)
+		const member_intern = member_infos.filter(m=>m.intern===1)
 
 		const roles_ = await GetCasinoRole();
 		if(sttr){
@@ -60,9 +62,10 @@ export default {
 		// TODO : 인턴은 따로돌린다.
 
 		const before = new Map();
-		let get_firsted = false;
-		let str_val = '오늘의 카지노 \n' + SuppleMember(role_addt,joinner,member_nicks,roles_);
-
+		let str_val = '오늘의 카지노 \n' + SuppleMember(role_addt,joinner,member_normal,roles_)+'\n';
+		if(member_intern.length > 0){
+			str_val += '인턴----\n' + await SetInternSuppleMember(role_addt,joinner,member_intern,roles_);
+		}
 		await interaction.reply({content:str_val})
 
 
@@ -70,7 +73,7 @@ export default {
 	
 }; 
 
-export const SuppleMember = (role_addt,joinner,member_nicks,roles_,debug=false)=>{
+export const SuppleMember = (role_addt: Map<any, any>,joinner: Map<any, any>,member_nicks: any[],roles_: { userId: string; Priority: number; RoleName: string; }[],debug=false)=>{
 	const deploy_result:Array<Map<string,string>> = [];
 	const names = new Map();
 	member_nicks.forEach(c=>{
@@ -145,4 +148,43 @@ export const SuppleMember = (role_addt,joinner,member_nicks,roles_,debug=false)=
 	}
 	return str_val;
 
+}
+export const SetInternSuppleMember = async (role_addt:Map<any, any>,joinner:Map<any, any>,interns: {
+    name: string;
+    userId: string;
+    intern: number;
+}[],roles_: { userId: string; Priority: number; RoleName: string; }[],debug=false) =>{
+	let ret = '\n';
+	const names = new Map();
+	const history_ = await GetCasinoInternHistory(Array.from(joinner.keys()));
+	const internPair:Map<string,Array<string>> = new Map();
+	for( const h of history_){
+		if(internPair.has(h.userId)){
+			internPair.get(h.userId).push(h.RoleName);
+		} else{
+			internPair.set(h.userId,[h.RoleName]);
+		}
+	}
+
+	for(let now=0;now<2;now++){
+		const nowPlayingRole:Map<string,string> = new Map()
+		ret += `${now+1} 부\n \`\`\``
+		for( const member of interns )
+		{
+			// TODO : 역할지정등.
+			if(!internPair.has(member.userId)){
+				internPair.set(member.userId,[]);
+			}
+			const playedHistory = internPair.get(member.userId);
+			const motherArray = roles_.filter(r=>playedHistory.includes(r.RoleName) && !nowPlayingRole.has(r.RoleName));
+			motherArray.sort(() => Math.random()-0.5);
+			const s = motherArray[0].RoleName;
+			nowPlayingRole.set(s,member.userId);
+			playedHistory.push(s);
+			ret += `${s} : ${member.name}+\n`
+		}
+
+		ret += '\n ``` \n'
+
+	}
 }

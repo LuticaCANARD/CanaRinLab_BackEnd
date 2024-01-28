@@ -16,5 +16,10 @@ export const GetCasinoRole = async () =>{
 export const GetMemberName = async (memberids)=>{
     return await db.selectFrom("CasinoMember")
     .where("CasinoMember.userId","in",memberids)
-    .select(["CasinoMember.name","CasinoMember.userId"]).execute();
+    .select(["CasinoMember.name","CasinoMember.userId","CasinoMember.intern"]).execute();
+}
+export const GetCasinoInternHistory = async(memberids:string[]) =>{
+    return await db.selectFrom("CasinoInternHistory")
+    .where("CasinoInternHistory.userId","in",memberids)
+    .select(["CasinoInternHistory.userId","CasinoInternHistory.RoleName"]).execute();
 }

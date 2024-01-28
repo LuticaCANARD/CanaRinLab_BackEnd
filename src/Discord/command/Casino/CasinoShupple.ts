@@ -193,13 +193,12 @@ export const SetInternSuppleMember = async (role_addt:Map<any, any>,joinner:Map<
 			const playedHistory = internPair.get(member.userId);
 			const motherArray = roles_.filter(r=> !playedHistory.includes(r.RoleName) && !nowPlayingRole.has(r.RoleName));
 			if(motherArray.length>0){
-
+				motherArray.sort(() => Math.random()-0.5);
+				const s = motherArray[0].RoleName;
+				nowPlayingRole.set(s,member.userId);
+				playedHistory.push(s);
+				deploy.set(s,member.userId);
 			}
-			motherArray.sort(() => Math.random()-0.5);
-			const s = motherArray[0].RoleName;
-			nowPlayingRole.set(s,member.userId);
-			playedHistory.push(s);
-			deploy.set(s,member.userId);
 		}
 
 		ret.push(deploy);

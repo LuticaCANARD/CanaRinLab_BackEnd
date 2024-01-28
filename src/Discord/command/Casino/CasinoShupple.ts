@@ -70,7 +70,7 @@ export default {
 		if(member_intern.length > 0){
 			const deploymap_intern = await SetInternSuppleMember(role_addt,joinner,member_intern,roles_);
 
-			str_val += '인턴----\n';
+			str_val += '----인턴----\n';
 			let v  = ''
 
 			for(let phase = 0; phase <deploymap_intern.length; phase ++){
@@ -80,6 +80,7 @@ export default {
 				}
 				v += '```\n'
 			}
+			str_val += v;
 
 		}
 		await interaction.reply({content:str_val})

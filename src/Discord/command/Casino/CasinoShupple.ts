@@ -53,6 +53,11 @@ export default {
 			names.set(c.userId,c.name);
 		})
 		const roles_ = await GetCasinoRole();
+		if(member_normal.length > roles_.length ){
+			await interaction.reply({content:'이번주 카지노는 쉽니다! (인원부족)',ephemeral: true}); 
+			return;
+		}
+
 		if(sttr){
 			for(let v of sttr ){
 				const arrs = v.split(':')
@@ -76,7 +81,7 @@ export default {
 			for(let phase = 0; phase <deploymap_intern.length; phase ++){
 				v += `${phase+1} 부 인턴 \n \`\`\``;
 				for(const role of Array.from(deploymap_intern[phase].keys())){
-					v += `${role} : ${names.get(deploymap_intern[phase].get(role))}\n`;
+					v += `${names.get(deploymap_intern[phase].get(role))} : ${role}\n`;
 				}
 				v += '```\n'
 			}
@@ -148,7 +153,7 @@ export const SuppleMember = (role_addt: Map<any, any>,joinner: Map<any, any>,mem
 		
 		str_val += `\`\`\`\n`
 		keys.forEach(key=>{
-			str_val += `${key} : ${names.get(now_checking_roles.get(key))}\n`
+			str_val += `${names.get(now_checking_roles.get(key))} : ${key}\n`
 		})
 		debugArray.push(now_checking_roles);
 		str_val += '```\n';

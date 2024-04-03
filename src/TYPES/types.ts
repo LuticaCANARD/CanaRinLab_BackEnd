@@ -17,8 +17,8 @@ export type CasinoInternHistory = {
 export type CasinoMember = {
   name: string | null;
   userId: string;
-  intern: number;
-  exeJoin: number | null;
+  intern: boolean;
+  exeJoin: boolean | null;
 };
 export type CasinoRoles = {
   Priority: Generated<number>;

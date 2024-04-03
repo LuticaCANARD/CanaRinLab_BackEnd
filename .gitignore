@@ -139,3 +139,4 @@ secure.json
 /keys/*
 
 bun.lockb
+.xata*
